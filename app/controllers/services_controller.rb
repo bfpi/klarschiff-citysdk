@@ -7,6 +7,6 @@ class ServicesController < ApplicationController
 
   def show
     @service = KSBackend.service(params[:service_id].to_i)
-    respond_with @service, root: 'service-definition'
+    respond_with @service, root: 'service_definition', dasherize: false
   end
 end

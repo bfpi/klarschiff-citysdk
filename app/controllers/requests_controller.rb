@@ -23,7 +23,7 @@ class RequestsController < ApplicationController
     filter[:agency_responsible] = params[:agency_responsible] unless params[:agency_responsible].blank?
     logger.info "filter: #{ filter.inspect }"
     @requests = KSBackend.requests filter
-    respond_with @requests, root: 'service_requests', extensions: params[:extensions]
+    respond_with @requests, root: 'service_requests', dasherize: false, extensions: params[:extensions]
   end
 
   # Einzelner Vorgang nach ID
@@ -31,8 +31,8 @@ class RequestsController < ApplicationController
   #  request_id          pflicht  - Vorgang-ID
   #  extensions          optional - Response mit erweitereten Attributsausgaben
   def show
-    @request = KSBackend.request(params[:request_id])
-    respond_with @request, root: 'service_requests', extensions: params[:extensions]
+    @request = KSBackend.request(params[:service_request_id])
+    respond_with @request, root: 'service_requests', dasherize: false, extensions: params[:extensions]
   end
 
   def create

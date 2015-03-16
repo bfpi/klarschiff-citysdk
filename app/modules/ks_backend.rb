@@ -8,7 +8,7 @@ module KSBackend
     res = Net::HTTP.get_response(uri)
     requests = []
     JSON.parse(res.body).each do |request|
-      requests << Request.new(request)
+      requests << Request.new(request) if request
     end
     requests
   end
@@ -22,7 +22,7 @@ module KSBackend
     res = Net::HTTP.get_response(uri)
     services = []
     JSON.parse(res.body).each do |service|
-      services << Services.new(service)
+      services << Services.new(service) if service
     end
     services
   end

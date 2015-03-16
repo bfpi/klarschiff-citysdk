@@ -1,25 +1,25 @@
 Rails.application.routes.draw do
 
-  get     'discovery'             => 'discovery#index'
+  get     'discovery'                    => 'discovery#index'
 
-  get     'services'              => 'services#index'
-  get     'services/:service_id'  => 'services#show'
+  get     'services'                     => 'services#index'
+  get     'services/:service_id'         => 'services#show'
 
-  get     'requests'              => 'requests#index'
-  get     'requests/:request_id'  => 'requests#show'
-  post    'requests'              => 'requests#create'
-  put     'requests/:request_id'  => 'requests#update'
-  patch   'requests/:request_id'  => 'requests#update'
+  get     'requests'                     => 'requests#index'
+  get     'requests/:service_request_id' => 'requests#show'
+  post    'requests'                     => 'requests#create'
+  put     'requests/:service_request_id' => 'requests#update'
+  patch   'requests/:service_request_id' => 'requests#update'
 
   namespace :requests do
-    post  'abuses/:request_id'    => 'abuses#create'
+    post  'abuses/:service_request_id'   => 'abuses#create'
 
-    get   'comments/:request_id'  => 'comments#index'
-    post  'comments/:request_id'  => 'comments#create'
+    get   'comments/:service_request_id' => 'comments#index'
+    post  'comments/:service_request_id' => 'comments#create'
 
-    get   'notes/:request_id'     => 'notes#index'
-    post  'notes/:request_id'     => 'notes#create'
+    get   'notes/:service_request_id'    => 'notes#index'
+    post  'notes/:service_request_id'    => 'notes#create'
 
-    post  'votes/:request_id'     => 'votes#create'
+    post  'votes/:service_request_id'    => 'votes#create'
   end
 end

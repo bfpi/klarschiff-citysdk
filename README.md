@@ -98,7 +98,7 @@ Sample Response:
 ```
 
 ### GET Service Request
-<code>http://[API endpoint]/requests/[request_id].[format]</code>
+<code>http://[API endpoint]/requests/[service_request_id].[format]</code>
 
 HTTP Method: GET
 

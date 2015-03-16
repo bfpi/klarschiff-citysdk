@@ -6,7 +6,7 @@ JSON, XML
 
 ## API Methods
 
-### GET Service List
+### GET Services (List)
 <code>http://[API endpoint]/services.[format]</code>
 
 HTTP Method: GET
@@ -41,17 +41,17 @@ Parameters:
 Sample Response:
 
 ```xml
-<service-definition type="array">
+<service_definition type="array">
   <service>
     <service_code>category.id</service_code>
     <service_name>category.name</service_name>
     <keywords>category.parent.typ [problem|idee]</keywords>
     <group>category.parent.name</group>
   </service>
-</services>
+</service_definition>
 ```
 
-### GET Request List
+### GET Service Requests (List)
 <code>http://[API endpoint]/requests.[format]</code>
 
 HTTP Method: GET
@@ -73,7 +73,7 @@ Parameters:
 Sample Response:
 
 ```xml
-<service-requests type="array">
+<service_requests type="array">
   <request>
     <service_request_id>request.id</service_request_id>
     <status_notes/>
@@ -94,10 +94,10 @@ Sample Response:
     <media_url/>
     <zipcode/>
   </request>
-</service-requests>
+</service_requests>
 ```
 
-### GET Request
+### GET Service Request
 <code>http://[API endpoint]/requests/[request_id].[format]</code>
 
 HTTP Method: GET
@@ -106,13 +106,13 @@ Parameters:
 
 | Name  | Required  | Type  |
 |:--|:-:|:-:|:-:|
-| request_id | X | Integer |
+| service_request_id | X | Integer |
 | extensions | - | Boolean | |
 
 Sample Response:
 
 ```xml
-<service-requests type="array">
+<service_requests type="array">
   <request>
     <service_request_id>request.id</service_request_id>
     <status_notes/>
@@ -143,5 +143,5 @@ Sample Response:
       <votes/>
     </extended_attributes>
   </request>
-</service-requests>
+</service_requests>
 ```

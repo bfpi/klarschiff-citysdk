@@ -27,7 +27,7 @@ Sample Response:
 </services>
 ```
 
-### GET Service Definition
+### Get Service Definition
 <code>http://[API endpoint]/services/[service_id].[format]</code>
 
 HTTP Method: GET
@@ -51,7 +51,7 @@ Sample Response:
 </service_definition>
 ```
 
-### GET Service Requests (List)
+### Get Service Requests (List)
 <code>http://[API endpoint]/requests.[format]</code>
 
 HTTP Method: GET
@@ -97,7 +97,7 @@ Sample Response:
 </service_requests>
 ```
 
-### GET Service Request
+### Get Service Request
 <code>http://[API endpoint]/requests/[service_request_id].[format]</code>
 
 HTTP Method: GET
@@ -105,9 +105,9 @@ HTTP Method: GET
 Parameters:
 
 | Name  | Required  | Type  |
-|:--|:-:|:-:|:-:|
+|:--|:-:|:-:|
 | service_request_id | X | Integer |
-| extensions | - | Boolean | |
+| extensions | - | Boolean |
 
 Sample Response:
 
@@ -139,9 +139,144 @@ Sample Response:
       <media_urls>
         <media_url>request.media.url</media_url>
       </media_urls>
-      <trust/>
-      <votes/>
+      <photo_required>request.photo_required</photo_required>
+      <trust>request.trust</trust>
+      <votes>request.votes</votes>
     </extended_attributes>
   </request>
 </service_requests>
+```
+
+### Create Service Request
+<code>http://[API endpoint]/requests.[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name  | Required  | Type  | Notes  |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | API-Key |
+| email | X | String | Author-Email |
+| service_code | X | Integer | Category-ID |
+| title | X | String | Title (max. 300 character) |
+| description | X | String | Description |
+| lat | - | Float | either lat & long or address_string |
+| long | - | Float | either lat & long or address_string |
+| address_string | - | String | either address_string or lat & long |
+| attribute | - | - | additional attributes |
+| attribute[photo_required] | - | Boolean | Photo required |
+| media | - | String | Photo |
+
+Sample Response:
+
+```xml
+<request>
+  <service_request_id>request.id</service_request_id>
+</request>
+```
+
+### Update Service Request
+<code>http://[API endpoint]/requests/[service_request_id].[format]</code>
+
+HTTP Method: PUT / PATCH
+
+Parameters:
+
+| Name  | Required  | Type  | Notes  |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | API-Key |
+| email | X | String | Author-Email |
+| service_code | - | Integer | Category-ID |
+| title | - | String | Title (max. 300 character) |
+| description | - | String | Description |
+| lat | - | Float | either lat & long or address_string |
+| long | - | Float | either lat & long or address_string |
+| address_string | - | String | either address_string or lat & long |
+| attribute | - | - | additional attributes |
+| attribute[photo_required] | - | Boolean | Photo required |
+| attribute[status] | - | String | Status (RECEIVED, IN_PROCESS, PROCESSED, REJECTED) |
+| attribute[status_comment] | - | String | Status comment |
+| attribute[priority] | - | Integer | Priority |
+| media | - | String | Photo |
+
+Sample Response:
+
+```xml
+
+```
+
+### Get Comments from Service Request
+<code>http://[API endpoint]/requests/comments/[service_request_id].[format]</code>
+
+HTTP Method: GET
+
+Parameters:
+
+| Name  | Required  | Type  | Notes  |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
+| api_key | - | String | If ```api_key``` passed and ```read_comment_author``` permission is configured for given ```api_key``` the author will be displayed. |
+
+Sample Response:
+
+```xml
+<comments type="array">
+  <comment>
+    <id>comment.id</id>
+    <jurisdiction_id></jurisdiction_id>
+    <comment>comment.text</comment>
+    <datetime>comment.datetime</datetime>
+    <service_request_id>comment.service_request_id</service_request_id>
+    <author>comment.author</author>
+  </comment>
+</comments>
+```
+
+### Get Notes from Service Request
+<code>http://[API endpoint]/requests/notes/[service_request_id].[format]</code>
+
+HTTP Method: GET
+
+Parameters:
+
+| Name  | Required  | Type  |
+|:--|:-:|:-:|
+| service_request_id | X | Integer |
+| api_key | X | String |
+
+Sample Response:
+
+```xml
+<notes type="array">
+  <note>
+    <id>note.id</id>
+    <jurisdiction_id></jurisdiction_id>
+    <comment>note.text</comment>
+    <datetime>note.datetime</datetime>
+    <service_request_id>note.service_request_id</service_request_id>
+    <author>note.author</author>
+  </note>
+</notes>
+```
+
+### Create new vote for Service Request
+<code>http://[API endpoint]/requests/votes/[service_request_id].[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name  | Required  | Type  |
+|:--|:-:|:-:|
+| service_request_id | X | Integer |
+| api_key | X | String |
+| email | X | String |
+
+Sample Response:
+
+```xml
+<vote>
+  <id>vote.id</id>
+</vote>
 ```

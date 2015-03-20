@@ -1,100 +1,126 @@
 class Request
+  include ActiveModel::AttributeMethods
+  include DateFormatter
+  include CitySDKSerialization
+
+  validates :typ, presence: true
+  validates :kategorie, presence: true
+  validates :email, presence: true, length: { maximum: 300 }, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+  validates :title, presence: true, length: { maximum: 300 }
+  validates :description, presence: true
+
+  attr_accessor :id, :version, :datum, :typ, :betreff, :adresse, :statusKommentar, :kategorie, :details, :zustaendigkeit,
+                :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
+                :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch
+
+  self.serialization_attributes = [:service_request_id]
 
   IMAGE_SIZE_BIG = 'fotoGross'
   IMAGE_SIZE_NORMAL = 'fotoNormal'
   IMAGE_SIZE_THUMB = 'fotoThumb'
 
-  def initialize(attributes)
-    @attributes = attributes
+  alias_attribute :service_request_id, :id
+  alias_attribute :status_notes, :statusKommentar
+  alias_attribute :description, :details
+  alias_attribute :title, :betreff
+  alias_attribute :autorEmail, :email
+  alias_attribute :photo_required, :fotowunsch
+  alias_attribute :agency_responsible, :zustaendigkeit
+  alias_attribute :address, :adresse
+  alias_attribute :trust, :trustLevel
+  alias_attribute :votes, :unterstuetzerCount
+
+  def positionWGS84=(value)
+    @lat, @long = value.gsub(/[A-Z()]*/, '').strip.split(" ")
   end
 
-  def to_xml arghs
+  def positionWGS84
+    "POINT (#{ @lat } #{ @long })"
+  end
 
-    Rails.logger.info @attributes.inspect
+  def status
+    @status.to_open311
+  end
 
-    xml = arghs[:builder]
-    xml = Builder::XmlMarkup.new unless xml
-    xml.request do
-      xml.service_request_id @attributes['id']
-      xml.status_notes @attributes['statusKommentar']
-      xml.status Status.open_or_closed(@attributes['status'])
-      xml.service_code @attributes['kategorie']['id']
-      xml.service_name @attributes['kategorie']['name']
-      xml.description @attributes['details']
-      xml.title @attributes['betreff']
-      xml.agency_responsible @attributes['zustaendigkeit']
-      xml.service_notice nil
-      xml.requested_datetime formatDate(@attributes['datum'])
-      xml.updated_datetime formatDate(@attributes['version'])
-      xml.expected_datetime formatDate(@attributes['auftragDatum'])
-      xml.address @attributes['adresse']
-      xml.adress_id nil
-      xml.lat position[0]
-      xml.long position[1]
-      xml.media_url image(IMAGE_SIZE_BIG)
-      xml.zipcode nil
-      xml.extended_attributes do
-        xml.service_object_type nil
-        xml.service_object_id nil
-        xml.detailed_status Status.constant_from_value(@attributes['status'])
-        xml.media_urls do |mu|
-          images.each do |img|
-            xml.media_url img
-          end
-        end
-        xml.trust nil # Ticket 325
-        xml.votes nil # Ticket 330
-      end if arghs[:extensions] && arghs[:extensions].eql?("true")
+  def status=(value)
+    @status = Status.new(value)
+  end
+
+  def detailed_status
+    @status.to_city_sdk
+  end
+
+  def service_code
+    kategorie['id']
+  end
+
+  def service_name
+    kategorie['name']
+  end
+
+  def requested_datetime
+    format_date(datum)
+  end
+
+  def updated_datetime
+    format_date(version)
+  end
+
+  def expected_datetime
+    format_date(auftragDatum)
+  end
+
+  def media_url
+    image(IMAGE_SIZE_BIG)
+  end
+
+  def title=(value)
+    @betreff= value
+  end
+
+  def description=(value)
+    @details= value
+  end
+
+  def attribute=(attributes)
+    update_attributes(attributes)
+  end
+
+  def extended_attributes
+    { service_object_type: nil, service_object_id: nil, detailed_status: detailed_status,
+      media_urls: images, photo_required: photo_required, trust: trust, votes: votes }
+  end
+
+  def update_service(values)
+    if values["service_code"] && values["service_code"].is_i?
+      sc = KSBackend.service(values["service_code"].to_i)
+      p sc
+      @kategorie = sc.instance_values
+      @typ = sc.parent['typ'] if sc.parent
     end
-    xml
   end
 
-  def as_json arghs
-    ret = {
-      service_request_id: @attributes['id'],
-      status_notes: @attributes['statusKommentar'],
-      status: Status.open_or_closed(@attributes['status']),
-      service_code: @attributes['kategorie']['id'],
-      service_name: @attributes['kategorie']['name'],
-      description: @attributes['details'],
-      title: @attributes['betreff'],
-      agency_responsible: @attributes['zustaendigkeit'],
-      service_notice: nil,
-      requested_datetime: formatDate(@attributes['datum']),
-      updated_datetime: formatDate(@attributes['version']),
-      expected_datetime: formatDate(@attributes['auftragDatum']),
-      address: @attributes['adresse'],
-      adress_id: nil,
-      lat: position[0],
-      long: position[1],
-      media_url: image(IMAGE_SIZE_BIG),
-      zipcode: nil
+  def to_backend_params
+    {
+      typ: typ,
+      kategorie: service_code,
+      positionWGS84: positionWGS84,
+      autorEmail: email,
+      betreff: betreff,
+      details: details,
+      #bild: nil, #media,
+      resultObjectOnSubmit: true,
+      photo_required: photo_required
     }
-    if arghs[:extensions] && arghs[:extensions].eql?("true")
-      ret['extended_attributes'] = {
-        service_object_type: nil,
-        service_object_id: nil,
-        detailed_status: Status.constant_from_value(@attributes['status']),
-        media_urls: images || nil,
-        trust: nil, # Ticket 325
-        votes: nil # Ticket 330
-      }
-    end
-    ret
+  end
+
+  def errors_messages
+    Exception.new(errors.messages.map { |k, v| "#{ k }: #{ v.join(', ') }" })
   end
 
   private
-  def formatDate date
-    return nil if date.blank?
-    Time.at(date / 1000)
-  end
-
-  def position
-    @attributes['positionWGS84'].gsub(/[A-Z()]*/, '').strip.split(" ")
-  end
-
-  def image size
-    @attributes[size].blank? ? nil : "#{ KS_IMAGES_URL }#{ @attributes[size] }"
+  def image(size)
+    self.send(size).blank? ? nil : "#{ KS_IMAGES_URL }#{ self.send(size) }"
   end
 
   def images
@@ -103,5 +129,15 @@ class Request
       image(IMAGE_SIZE_NORMAL),
       image(IMAGE_SIZE_THUMB)
     ].compact
+  end
+
+  def serializable_methods(options)
+    ret = []
+    ret << :extended_attributes if options[:extensions]
+    ret << [:status_notes, :status, :service_code, :service_name,
+            :description, :title, :agency_responsible, :service_notice, :requested_datetime,
+            :updated_datetime, :expected_datetime, :address, :adress_id, :lat, :long, :media_url,
+            :zipcode] unless options[:show_only_id]
+    ret.flatten
   end
 end

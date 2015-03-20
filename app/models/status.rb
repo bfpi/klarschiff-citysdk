@@ -1,20 +1,35 @@
 class Status
+  CITY_SDK = { 'PENDING' => 'gemeldet', 'RECEIVED' => 'offen', 'IN_PROCESS' => 'inBearbeitung',
+               'PROCESSED' => 'abgeschlossen', 'REJECTED' => 'wirdNichtBearbeitet' }
 
-  PENDING = 'gemeldet'
-  RECEIVED = 'offen'
-  IN_PROCESS = 'inBearbeitung'
-  PROCESSED = 'abgeschlossen'
-  REJECTED = 'wirdNichtBearbeitet'
+  OPEN311 = { 'OPEN' => ['gemeldet', 'offen', 'inBearbeitung'], 'CLOSED' => ['abgeschlossen', 'wirdNichtBearbeitet'] }
 
-  OPEN = [PENDING, RECEIVED, IN_PROCESS]
-  CLOSED = [PROCESSED, REJECTED]
-
-  def self.constant_from_value val
-    constants.find{ |name| const_get(name).eql?(val) }.to_s
+  def initialize(status)
+    @city_sdk = CITY_SDK.detect { |_k, v| v == status }.first
+    @open311 = OPEN311.detect { |_k, v| v.include?(status) }.first
   end
 
-  def self.open_or_closed val
-    OPEN.include?(val) ? "open" : "closed"
+  def self.for_backend(open311_status)
+    OPEN311.slice(*Array(open311_status).map(&:upcase)).values.flatten
   end
 
+  def self.valid_filter_values(values, target = :open311)
+    values = values.split(',') if values.is_a?(String)
+    (matches = case target
+                 when :open311
+                   OPEN311.keys
+                 when :city_sdk
+                   CITY_SDK.keys
+                 else
+                   raise 'Unknown status target'
+               end & values.map(&:upcase)) && matches.size == values.size
+  end
+
+  def to_city_sdk
+    @city_sdk
+  end
+
+  def to_open311
+    @open311
+  end
 end

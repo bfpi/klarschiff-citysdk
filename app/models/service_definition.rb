@@ -1,31 +1,18 @@
 class ServiceDefinition
+  include CitySDKSerialization
 
-  def initialize(attributes)
-    @attributes = attributes
+  attr_accessor :id, :name, :parent
+
+  self.serialization_attributes = [:service_code, :service_name, :keywords, :group]
+
+  alias_attribute :service_code, :id
+  alias_attribute :service_name, :name
+
+  def keywords
+    parent['typ']
   end
 
-  def to_xml arghs
-    xml = arghs[:builder]
-    xml = Builder::XmlMarkup.new unless xml
-    xml.service do
-      xml.service_code @attributes['id']
-      xml.service_name @attributes['name']
-      xml.keywords parent_value('typ')
-      xml.group parent_value('name')
-    end
-    xml
-  end
-
-  def as_json arghs
-    {
-        service_code: @attributes['id'],
-        service_name: @attributes['name'],
-        keywords: parent_value('typ'),
-        group: parent_value('name')
-    }
-  end
-
-  def parent_value val
-    @attributes['parent'] ? @attributes['parent'][val] : nil
+  def group
+    parent['name']
   end
 end

@@ -12,14 +12,14 @@ Rails.application.routes.draw do
   patch   'requests/:service_request_id' => 'requests#update'
 
   namespace :requests do
-    post  'abuses/:service_request_id'   => 'abuses#create'
+    post  'abuses/:service_request_id'   => 'abuses#create', as: :abuses
 
     get   'comments/:service_request_id' => 'comments#index'
-    post  'comments/:service_request_id' => 'comments#create'
+    post  'comments/:service_request_id' => 'comments#create', as: :comments
 
     get   'notes/:service_request_id'    => 'notes#index'
-    post  'notes/:service_request_id'    => 'notes#create'
+    post  'notes/:service_request_id'    => 'notes#create', as: :notes
 
-    post  'votes/:service_request_id'    => 'votes#create'
+    post  'votes/:service_request_id'    => 'votes#create', as: :votes
   end
 end

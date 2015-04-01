@@ -60,6 +60,7 @@ Parameters:
 
 | Name  | Required  | Type  | Notes  |
 |:--|:-:|:-:|:-:|
+| api_key | - | String | API-Key |
 | service_request_id | - | Integer | List of multiple Request-IDs, comma delimited |
 | service_code | - | Integer | |
 | status | - | String | Options: default=open, closed |
@@ -107,6 +108,7 @@ Parameters:
 | Name  | Required  | Type  |
 |:--|:-:|:-:|
 | service_request_id | X | Integer |
+| api_key | - | String | API-Key |
 | extensions | - | Boolean |
 
 Sample Response:
@@ -133,8 +135,6 @@ Sample Response:
     <media_url/>
     <zipcode/>
     <extended_attributes>
-      <service_object_type/>
-      <service_object_id/>
       <detailed_status>request.detailed_status</detailed_status>
       <media_urls>
         <media_url>request.media.url</media_url>
@@ -164,16 +164,17 @@ Parameters:
 | lat | - | Float | either lat & long or address_string |
 | long | - | Float | either lat & long or address_string |
 | address_string | - | String | either address_string or lat & long |
-| attribute | - | - | additional attributes |
-| attribute[photo_required] | - | Boolean | Photo required |
-| media | - | String | Photo |
+| photo_required | - | Boolean | Photo required |
+| media | - | String | Photo (Base64-Encoded-String) |
 
 Sample Response:
 
 ```xml
-<request>
-  <service_request_id>request.id</service_request_id>
-</request>
+<service_requests>
+  <request>
+    <service_request_id>request.id</service_request_id>
+  </request>
+</service_requests>
 ```
 
 ### Update Service Request
@@ -193,17 +194,40 @@ Parameters:
 | lat | - | Float | either lat & long or address_string |
 | long | - | Float | either lat & long or address_string |
 | address_string | - | String | either address_string or lat & long |
-| attribute | - | - | additional attributes |
-| attribute[photo_required] | - | Boolean | Photo required |
-| attribute[status] | - | String | Status (RECEIVED, IN_PROCESS, PROCESSED, REJECTED) |
-| attribute[status_comment] | - | String | Status comment |
-| attribute[priority] | - | Integer | Priority |
-| media | - | String | Photo |
+| photo_required | - | Boolean | Photo required |
+| detailed_status | - | String | Status (RECEIVED, IN_PROCESS, PROCESSED, REJECTED) |
+| status_notes | - | String | Status note |
+| priority | - | Integer | Priority |
+| delegation | - | String | Delegation to external role |
+| job_status | - | Integer | Job status |
+| job_priority | - | Integer | Job priority |
+| media | - | String | Photo (Base64-Encoded-String) |
 
 Sample Response:
 
 ```xml
-
+<service_requests type="array">
+  <request>
+    <service_request_id>request.id</service_request_id>
+    <status_notes/>
+    <status>request.status</status>
+    <service_code>request.service.code</service_code>
+    <service_name>request.service.name</service_name>
+    <description>request.description</description>
+    <title>request.title</title>
+    <agency_responsible>request.agency_responsible</agency_responsible>
+    <service_notice/>
+    <requested_datetime>request.requested_datetime</requested_datetime>
+    <updated_datetime>request.updated_datetime</updated_datetime>
+    <expected_datetime/>
+    <address>request.address</address>
+    <adress_id/>
+    <lat>request.position.lat</lat>
+    <long>request.position.lat</long>
+    <media_url/>
+    <zipcode/>
+  </request>
+</service_requests>
 ```
 
 ### Get Comments from Service Request
@@ -228,7 +252,34 @@ Sample Response:
     <comment>comment.text</comment>
     <datetime>comment.datetime</datetime>
     <service_request_id>comment.service_request_id</service_request_id>
-    <author>comment.author</author>
+  </comment>
+</comments>
+```
+
+### Create new comment for Service Request
+<code>http://[API endpoint]/requests/comments/[service_request_id].[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name  | Required  | Type  |
+|:--|:-:|:-:|
+| service_request_id | X | Integer |
+| api_key | X | String |
+| author | X | String |
+| comment | X | String |
+
+Sample Response:
+
+```xml
+<comments>
+  <comment>
+    <id>comment.id</id>
+    <jurisdiction_id></jurisdiction_id>
+    <comment>comment.text</comment>
+    <datetime>comment.datetime</datetime>
+    <service_request_id>comment.service_request_id</service_request_id>
   </comment>
 </comments>
 ```
@@ -250,7 +301,6 @@ Sample Response:
 ```xml
 <notes type="array">
   <note>
-    <id>note.id</id>
     <jurisdiction_id></jurisdiction_id>
     <comment>note.text</comment>
     <datetime>note.datetime</datetime>
@@ -258,6 +308,58 @@ Sample Response:
     <author>note.author</author>
   </note>
 </notes>
+```
+
+### Create new note for Service Request
+<code>http://[API endpoint]/requests/notes/[service_request_id].[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name  | Required  | Type  |
+|:--|:-:|:-:|
+| service_request_id | X | Integer |
+| api_key | X | String |
+| author | X | String |
+| comment | X | String |
+
+Sample Response:
+
+```xml
+<notes>
+  <note>
+    <jurisdiction_id></jurisdiction_id>
+    <comment>note.text</comment>
+    <datetime>note.datetime</datetime>
+    <service_request_id>note.service_request_id</service_request_id>
+    <author>note.author</author>
+  </note>
+</notes>
+```
+
+
+### Create new abuse for Service Request
+<code>http://[API endpoint]/requests/abuses/[service_request_id].[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name  | Required  | Type  |
+|:--|:-:|:-:|
+| service_request_id | X | Integer |
+| author | X | String |
+| comment | X | String |
+
+Sample Response:
+
+```xml
+<abuses>
+  <abuse>
+    <id>vote.id</id>
+  </abuse>
+</abuses>
 ```
 
 ### Create new vote for Service Request
@@ -270,13 +372,14 @@ Parameters:
 | Name  | Required  | Type  |
 |:--|:-:|:-:|
 | service_request_id | X | Integer |
-| api_key | X | String |
-| email | X | String |
+| author | X | String |
 
 Sample Response:
 
 ```xml
-<vote>
-  <id>vote.id</id>
-</vote>
+<votes>
+  <vote>
+    <id>vote.id</id>
+  </vote>
+</votes>
 ```

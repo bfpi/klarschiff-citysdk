@@ -1,10 +1,9 @@
 class Vote
   include ActiveModel::AttributeMethods
   include CitySDKSerialization
+  include ValidationErrorFormatter
 
-  validates :email, presence: true, length: { maximum: 300 }, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
-
-  attr_accessor :service_request_id, :email
+  attr_accessor :service_request_id, :author
 
   self.serialization_attributes = [:id]
 
@@ -13,7 +12,7 @@ class Vote
   def to_backend_params
     {
       vorgang: id,
-      email: email,
+      email: author,
       resultObjectOnSubmit: true
     }
   end

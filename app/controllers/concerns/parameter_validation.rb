@@ -22,6 +22,12 @@ module ParameterValidation
     end
   end
 
+  def validate_detailed_status
+    unless params[:detailed_status].blank?
+      raise "status invalid" unless Status.valid_filter_values(params[:detailed_status], :city_sdk)
+    end
+  end
+
   def validate_service_request_id
     unless params[:service_request_id].blank?
       raise "service_request_id is not a number" unless params[:service_request_id].is_i?

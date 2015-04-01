@@ -1,10 +1,12 @@
 class Comment
   include DateFormatter
   include CitySDKSerialization
+
   attr_accessor :id, :freitext, :datum, :vorgang, :autorEmail, :empfaengerEmail
 
   self.serialization_attributes = [:id, :jurisdiction_id, :comment, :datetime, :service_request_id]
 
+  alias_attribute :service_request_id, :id
   alias_attribute :comment, :freitext
   alias_attribute :author, :autorEmail
 
@@ -14,6 +16,14 @@ class Comment
 
   def service_request_id
     vorgang['id']
+  end
+
+  def to_backend_create_params
+    {
+        vorgang: id,
+        email: author,
+        freitext: freitext,
+    }
   end
 
   private

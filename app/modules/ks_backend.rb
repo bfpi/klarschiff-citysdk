@@ -13,6 +13,10 @@ module KSBackend
     self.post "vorgang", parameter, Request, true
   end
 
+  def self.update_request(parameter)
+    self.post "vorgangAktualisieren", parameter, Request, true
+  end
+
   def self.services(params = nil)
     self.get "unterkategorien", params, Service
   end
@@ -25,12 +29,24 @@ module KSBackend
     self.get "lobHinweiseKritik", { vorgang_id: id }, Comment
   end
 
+  def self.create_comment(parameter)
+    self.post "lobHinweiseKritik", parameter, Comment, true
+  end
+
   def self.notes(id)
     self.get "kommentar", { vorgang_id: id }, Note
   end
 
+  def self.create_note(parameter)
+    self.post "kommentar", parameter, Note, true
+  end
+
   def self.create_vote(parameter)
     self.post "unterstuetzer", parameter, Vote, true
+  end
+
+  def self.create_abuse(parameter)
+    self.post "missbrauchsmeldung", parameter, Abuse, true
   end
 
   private
@@ -41,7 +57,7 @@ module KSBackend
     begin
       res = Net::HTTP.get_response(uri)
     rescue Exception
-      raise ErrorMessage.new("BE-Service currently unavailable")
+      raise ErrorMessage.new(I18n.t("backend.unavailable"))
     end
     self.handle_response res.body, response_class, only_one
   end
@@ -52,9 +68,8 @@ module KSBackend
     begin
       res = Net::HTTP.post_form(uri, params)
     rescue Exception
-      raise ErrorMessage.new("BE-Service currently unavailable")
+      raise ErrorMessage.new(I18n.t("backend.unavailable"))
     end
-    p res.body
     self.handle_response res.body, response_class, only_one
   end
 

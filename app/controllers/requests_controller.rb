@@ -3,6 +3,7 @@ class RequestsController < ApplicationController
 
   # Liste von Vorgängen
   # params:
+  #   api_key             optional - API-Key
   #   service_request_id  optional - Filter: Vorgangs-IDs(Kommaliste)
   #   service_code        optional - Filter: Kategorie-ID
   #   status              optional - Filter: Vorgangsstatus (Options: default=open, closed)
@@ -24,16 +25,20 @@ class RequestsController < ApplicationController
     filter[:agency_responsible] = params[:agency_responsible] unless params[:agency_responsible].blank?
 
     @requests = KSBackend.requests filter
-    respond_with @requests, root: 'service_requests', dasherize: false, extensions: params[:extensions].try(:to_boolean)
+    respond_with(@requests, root: :service_requests, dasherize: false,
+      extensions: params[:extensions].try(:to_boolean), job_details: has_permission?(:request_job_details))
   end
 
   # Einzelner Vorgang nach ID
   # params:
   #   service_request_id  pflicht  - Vorgang-ID
+  #   api_key             optional - API-Key
   #   extensions          optional - Response mit erweitereten Attributsausgaben
   def show
     @request = KSBackend.request(params[:service_request_id])
-    respond_with @request, root: 'service_requests', dasherize: false, extensions: params[:extensions].try(:to_boolean)
+    respond_with(@request, root: :service_requests,
+                 dasherize: false, extensions: params[:extensions].try(:to_boolean),
+                 job_details: has_permission?(:request_job_details))
   end
 
   # Neuen Vorgang anlegen
@@ -43,23 +48,22 @@ class RequestsController < ApplicationController
   #   email               pflicht - Autor-Email
   #   title               pflicht - Titel
   #   description         pflicht - Beschreibung
-  #   location            optional - lat & long ODER address_string
-  #     lat               optional - Latitude
-  #     long              optional - Longitude
-  #     address_string    optional - Address-String
-  #   attribute           optional - Zusätzliche Attribute
-  #     photo_required    optional - Fotowunsch
-  #   media               optional - Foto
+  #   lat                 optional - Latitude & Longitude ODER Address-String
+  #   long                optional - Latitude & Longitude ODER Address-String
+  #   address_string      optional - Latitude & Longitude ODER Address-String
+  #   photo_required      optional - Fotowunsch
+  #   media               optional - Foto (Base64-Encoded-String)
   def create
     request = Request.new
     request.update_attributes(params)
     request.update_service(params)
 
     raise request.errors_messages unless request.valid?
-    backend_params = request.to_backend_params
+    backend_params = request.to_backend_create_params
     client = current_client(params)
     backend_params[:authCode] = client[:backend_auth_code].presence if client
-    respond_with KSBackend.create_request(backend_params), dasherize: false, show_only_id: true
+    respond_with(Array.wrap(KSBackend.create_request(backend_params)), root: :service_requests, location: requests_url,
+                 dasherize: false, show_only_id: true)
   end
 
   # Vorgang aktualisieren
@@ -70,17 +74,27 @@ class RequestsController < ApplicationController
   #   service_code        optional - Kategorie
   #   title               optional - Titel
   #   description         optional - Beschreibung
-  #   location            optional - lat & long ODER address_string
-  #     lat               optional - Latitude
-  #     long              optional - Longitude
-  #     address_string    optional - Address-String
-  #   attribute           optional - Zusätzliche Attribute
-  #     photo_required    optional - Fotowunsch
-  #     status            optional - Status (RECEIVED, IN_PROCESS, PROCESSED, REJECTED)
-  #     status_comment    optional - Statuskommentar
-  #     priority          optional - Priorität
-  #   media               optional - Foto
+  #   lat                 optional - Latitude & Longitude ODER Address-String
+  #   long                optional - Latitude & Longitude ODER Address-String
+  #   address_string      optional - Latitude & Longitude ODER Address-String
+  #   photo_required      optional - Fotowunsch
+  #   media               optional - Foto (Base64-Encoded-String)
+  #   detailed_status     optional - Status (RECEIVED, IN_PROCESS, PROCESSED, REJECTED)
+  #   status_notes        optional - Statuskommentar
+  #   priority            optional - Priorität
+  #   delegation          optional - Delegation
+  #   job_status          optional - Auftrag-Status
+  #   job_priority        optional - Auftrag-Priorität
   def update
+    request = KSBackend.request(params[:service_request_id]).first
+    request.update_attributes(params)
+    request.update_service(params)
 
+    backend_params = request.to_backend_update_params
+    client = current_client(params)
+    backend_params[:authCode] = client[:backend_auth_code].presence if client
+
+    respond_with(Array.wrap(KSBackend.update_request(backend_params)), root: :service_requests, location: requests_url,
+                 dasherize: false, show_only_id: true)
   end
 end

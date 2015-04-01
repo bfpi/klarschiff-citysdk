@@ -7,6 +7,7 @@ class Status
   def initialize(status)
     @city_sdk = CITY_SDK.detect { |_k, v| v == status }.first
     @open311 = OPEN311.detect { |_k, v| v.include?(status) }.first
+    @backend = status
   end
 
   def self.for_backend(open311_status)
@@ -31,5 +32,9 @@ class Status
 
   def to_open311
     @open311
+  end
+
+  def to_backend
+    @backend
   end
 end

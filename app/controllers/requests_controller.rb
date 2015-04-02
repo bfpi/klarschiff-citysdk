@@ -7,6 +7,7 @@ class RequestsController < ApplicationController
   #   service_request_id  optional - Filter: Vorgangs-IDs(Kommaliste)
   #   service_code        optional - Filter: Kategorie-ID
   #   status              optional - Filter: Vorgangsstatus (Options: default=open, closed)
+  #   detailed_status     optional - Filter: Vorgangsstatus (Options: PENDING, RECEIVED, IN_PROCESS, PROCESSED, REJECTED)
   #   start_date          optional - Filter: Meldungsdatum >= date
   #   end_date            optional - Filter: Meldungsdatum <= date
   #   updated_after       optional - Filter vorgang.version >= date
@@ -17,7 +18,8 @@ class RequestsController < ApplicationController
     filter = {}
     filter[:ids] = params[:service_request_id] unless params[:service_request_id].blank?
     filter[:category_id] = params[:service_code] unless params[:service_code].blank?
-    filter[:status] = Status.for_backend(params[:status] ? params[:status].split(',') : 'open').join(',')
+    filter[:status] = Status.open311_for_backend(params[:status] ? params[:status].split(',') : 'open').join(',')
+    filter[:status] = Status.citysdk_for_backend(params[:detailed_status].split(',')) unless params[:detailed_status].blank?
     filter[:date_from] = (params[:start_date].to_time.to_i * 1000) unless params[:start_date].blank?
     filter[:date_to] = (params[:end_date].to_time.to_i * 1000) unless params[:end_date].blank?
     filter[:updated_from] = (params[:updated_after].to_time.to_i * 1000) unless params[:updated_after].blank?

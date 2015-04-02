@@ -64,6 +64,7 @@ Parameters:
 | service_request_id | - | Integer | List of multiple Request-IDs, comma delimited |
 | service_code | - | Integer | |
 | status | - | String | Options: default=open, closed |
+| detailed_status |  - | String | Options: PENDING, RECEIVED, IN_PROCESS, PROCESSED, REJECTED |
 | start_date | - | Date | e.g 2011-01-01T00:00:00Z |
 | end_date | - | Date | e.g 2011-01-01T00:00:00Z |
 | updated_after | - | Date | e.g 2011-01-01T00:00:00Z |

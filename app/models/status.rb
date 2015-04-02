@@ -10,8 +10,12 @@ class Status
     @backend = status
   end
 
-  def self.for_backend(open311_status)
+  def self.open311_for_backend(open311_status)
     OPEN311.slice(*Array(open311_status).map(&:upcase)).values.flatten
+  end
+
+  def self.citysdk_for_backend(citysdk_status)
+    CITY_SDK.slice(*Array(citysdk_status).map(&:upcase)).values.flatten
   end
 
   def self.valid_filter_values(values, target = :open311)

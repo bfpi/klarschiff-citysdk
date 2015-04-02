@@ -231,7 +231,7 @@ Sample Response:
 </service_requests>
 ```
 
-### Get Comments from Service Request
+### Get Comments from Service Request (List)
 <code>http://[API endpoint]/requests/comments/[service_request_id].[format]</code>
 
 HTTP Method: GET
@@ -257,7 +257,7 @@ Sample Response:
 </comments>
 ```
 
-### Create new comment for Service Request
+### Create new Comment for Service Request
 <code>http://[API endpoint]/requests/comments/[service_request_id].[format]</code>
 
 HTTP Method: POST
@@ -285,7 +285,7 @@ Sample Response:
 </comments>
 ```
 
-### Get Notes from Service Request
+### Get Notes from Service Request (List)
 <code>http://[API endpoint]/requests/notes/[service_request_id].[format]</code>
 
 HTTP Method: GET
@@ -311,7 +311,7 @@ Sample Response:
 </notes>
 ```
 
-### Create new note for Service Request
+### Create new Note for Service Request
 <code>http://[API endpoint]/requests/notes/[service_request_id].[format]</code>
 
 HTTP Method: POST
@@ -340,7 +340,7 @@ Sample Response:
 ```
 
 
-### Create new abuse for Service Request
+### Create new Abuse for Service Request
 <code>http://[API endpoint]/requests/abuses/[service_request_id].[format]</code>
 
 HTTP Method: POST
@@ -358,12 +358,12 @@ Sample Response:
 ```xml
 <abuses>
   <abuse>
-    <id>vote.id</id>
+    <id>abuse.id</id>
   </abuse>
 </abuses>
 ```
 
-### Create new vote for Service Request
+### Create new Vote for Service Request
 <code>http://[API endpoint]/requests/votes/[service_request_id].[format]</code>
 
 HTTP Method: POST

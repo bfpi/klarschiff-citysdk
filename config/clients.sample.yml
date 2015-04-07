@@ -1,11 +1,9 @@
 #
 # Mögliche Permissions:
 #
-#  create_comment       - Lob/Hinweis/Kritik anlegen /requests/comments/create
 #  read_comment_author  - Lob/Hinweis/Kritik - Ersteller Email lesen
 #  create_notes         - interne Kommentare anlegen /requests/notes/create
 #  read_notes           - interne Kommentare lesen /requests/notes/index
-#  create_request       - Neuen Vorgang anlegen /requests/create
 #  update_request       - Vorgang bearbeiten /requests/update
 #  request_job_details  - Auftrags-Daten (Auftrag-Status, Priorität, Delegation)
 #
@@ -14,10 +12,8 @@
   name: <Client-Name>
   backend_auth_code: <auth.kod_code>
   permissions:
-    - :create_comments
     - :read_comment_author
     - :create_notes
     - :read_notes
-    - :create_request
     - :update_request
     - :job_details

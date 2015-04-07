@@ -157,7 +157,7 @@ Parameters:
 
 | Name  | Required  | Type  | Notes  |
 |:--|:-:|:-:|:-:|
-| api_key | X | String | API-Key |
+| api_key | - | String | API-Key |
 | email | X | String | Author-Email |
 | service_code | X | Integer | Category-ID |
 | title | X | String | Title (max. 300 character) |
@@ -267,7 +267,6 @@ Parameters:
 | Name  | Required  | Type  |
 |:--|:-:|:-:|
 | service_request_id | X | Integer |
-| api_key | X | String |
 | author | X | String |
 | comment | X | String |
 

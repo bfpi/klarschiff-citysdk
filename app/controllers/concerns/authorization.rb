@@ -9,15 +9,11 @@ module Authorization
     private
     def check_auth
       case controller_path
-        when "requests/comments"
-          check_action_permission(:create_comments) if action_name == "create"
-
         when "requests/notes"
           check_action_permission(:read_notes) if action_name == "index"
           check_action_permission(:create_notes) if action_name == "create"
 
         when "requests"
-          check_action_permission(:create_request) if action_name == "create"
           check_action_permission(:update_request) if action_name == "update"
       end
     end

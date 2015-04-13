@@ -25,6 +25,7 @@ class RequestsController < ApplicationController
     filter[:updated_from] = (params[:updated_after].to_time.to_i * 1000) unless params[:updated_after].blank?
     filter[:updated_to] = (params[:updated_before].to_time.to_i * 1000) unless params[:updated_before].blank?
     filter[:agency_responsible] = params[:agency_responsible] unless params[:agency_responsible].blank?
+    filter[:negation] = params[:negation] unless params[:negation].blank?
 
     @requests = KSBackend.requests filter
     respond_with(@requests, root: :service_requests, dasherize: false,

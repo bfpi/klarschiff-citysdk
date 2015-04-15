@@ -136,7 +136,7 @@ class Request
   end
 
   def to_backend_update_params
-    to_backend_create_params.merge({
+    to_backend_create_params.merge(
       id: id,
       status: @status.to_backend,
       statusKommentar: statusKommentar,
@@ -144,7 +144,7 @@ class Request
       delegiertAn: delegation,
       auftragStatus: job_status,
       auftragPrioritaet: job_priority
-    })
+    ).delete_if { |_, value| value.nil? }
   end
 
   private

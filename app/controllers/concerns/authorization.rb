@@ -23,20 +23,18 @@ module Authorization
   def current_client(skip_raise = false)
     if params['api_key'].blank?
       raise ErrorMessage, "[http_code:400]##{ t("api_key.missing") }" unless skip_raise
-      return
     end
 
     key = params['api_key']
     if Client[key].blank?
       raise ErrorMessage, "[http_code:401]##{ t("api_key.invalid") }" unless skip_raise
-      return
     end
 
     Client[key]
   end
 
   def check_action_permission(permission)
-    current_client if @client.nil?
+    current_client
     raise ErrorMessage, "[http_code:403]##{ t("api_key.no_permision") }" unless has_permission?(permission)
   end
 

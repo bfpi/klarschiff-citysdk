@@ -14,6 +14,9 @@ class RequestsController < ApplicationController
   #   updated_before      optional - Filter vorgang.version <= date
   #   agency_responsible  optional - Filter vorgang.auftrag.team
   #   extensions          optional - Response mit erweitereten Attributsausgaben
+  #   lat                 optional - Schränkt den Bereich ein, in dem gesucht wird (benötigt: lat, long und radius)
+  #   long                optional - Schränkt den Bereich ein, in dem gesucht wird (benötigt: lat, long und radius)
+  #   radius              optional - Schränkt den Bereich ein, in dem gesucht wird (benötigt: lat, long und radius)
   def index
     filter = {}
     filter[:ids] = params[:service_request_id] unless params[:service_request_id].blank?
@@ -26,6 +29,9 @@ class RequestsController < ApplicationController
     filter[:updated_to] = (params[:updated_before].to_time.to_i * 1000) unless params[:updated_before].blank?
     filter[:agency_responsible] = params[:agency_responsible] unless params[:agency_responsible].blank?
     filter[:negation] = params[:negation] unless params[:negation].blank?
+    if params[:lat] && params[:long] && params[:radius]
+      filter[:restriction_area] = "ST_GeomFromText(ST_AsText(ST_Buffer(geography('POINT(#{ params[:lat] } #{ params[:long] })'), #{ params[:radius] })))"
+    end
 
     @requests = KSBackend.requests filter
     respond_with(@requests, root: :service_requests, dasherize: false,
@@ -97,7 +103,8 @@ class RequestsController < ApplicationController
     client = current_client(params)
     backend_params[:authCode] = client[:backend_auth_code].presence if client
 
-    respond_with(Array.wrap(KSBackend.update_request(backend_params)), root: :service_requests, location: requests_url,
-                 dasherize: false, show_only_id: true)
+    response_object = Array.wrap(KSBackend.update_request(backend_params))
+    respond_with(response_object, root: :service_requests, location: requests_url,
+                 dasherize: false, show_only_id: true, params[:format].to_sym => response_object)
   end
 end

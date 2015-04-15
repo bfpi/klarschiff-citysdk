@@ -71,6 +71,9 @@ Parameters:
 | updated_before | - | Date | e.g 2011-01-01T00:00:00Z |
 | agency_responsible | - | String | |
 | extensions | - | Boolean | |
+| lat | - | Double | restriction area (lat, long and radius required)
+| long | - | Double | restriction area (lat, long and radius required)
+| radius | - | Double | meter - restriction area (lat, long and radius required)
 
 Sample Response:
 

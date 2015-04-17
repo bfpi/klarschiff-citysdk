@@ -12,8 +12,8 @@ class Request
 
   attr_accessor :id, :version, :datum, :typ, :betreff, :adresse, :statusKommentar, :kategorie, :details, :zustaendigkeitFrontend,
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
-                :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch, :job_priority,
-                :job_status, :job_detail_attributes, :priority, :delegation, :statusDatum, :media
+                :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch, :job_priority, :media,
+                :job_status, :job_detail_attributes, :priority, :delegation, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn
 
   self.serialization_attributes = [:service_request_id]
 
@@ -32,6 +32,8 @@ class Request
   alias_attribute :trust, :trustLevel
   alias_attribute :votes, :unterstuetzerCount
   alias_attribute :detailed_status_datetime, :statusDatum
+  alias_attribute :job_priority, :auftragPrioritaet
+  alias_attribute :delegation, :delegiertAn
 
   def positionWGS84=(value)
     @lat, @long = value.gsub(/[A-Z()]*/, '').strip.split(" ")
@@ -100,6 +102,28 @@ class Request
 
   def photo_required=(value)
     @fotowunsch = value
+  end
+
+  def job_status
+    case auftragStatus
+      when "nicht_abgehakt"
+        "UNCHECKED"
+      when "abgehakt"
+        "CHECKED"
+      when "nicht_abarbeitbar"
+        "NOT_CHECKABLE"
+    end
+  end
+
+  def job_status=(value)
+    auftragStatus = case value
+      when "UNCHECKED"
+        "nicht_abgehakt"
+      when "CHECKED"
+        "abgehakt"
+      when "NOT_CHECKABLE"
+        "nicht_abarbeitbar"
+    end
   end
 
   def attribute=(attributes)

@@ -166,7 +166,7 @@ class Request
       statusKommentar: statusKommentar,
       prioritaet: priority,
       delegiertAn: delegation,
-      auftragStatus: job_status,
+      auftragStatus: auftragStatus,
       auftragPrioritaet: job_priority
     ).delete_if { |_, value| value.nil? }
   end

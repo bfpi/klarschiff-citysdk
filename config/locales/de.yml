@@ -41,5 +41,7 @@ de:
               blank: Es wurde keine Beschreibung übergeben
             position:
               invalid: Es konnte keine gültige Position ermittelt werden
+            service_code:
+              blank: Es wurde keine Kategorie übergeben
             title:
               blank: Es wurde kein Titel übergeben

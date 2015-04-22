@@ -4,6 +4,7 @@ class Request
   include CitySDKSerialization
   include ValidationErrorFormatter
 
+  validates :service_code, presence: true
   validates :title, presence: true
   validates :description, presence: true
   validate do

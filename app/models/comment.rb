@@ -4,7 +4,7 @@ class Comment
 
   attr_accessor :id, :freitext, :datum, :vorgang, :autorEmail, :empfaengerEmail
 
-  self.serialization_attributes = [:id, :jurisdiction_id, :comment, :datetime, :service_request_id]
+  self.serialization_attributes = [:id, :jurisdiction_id, :comment, :datetime, :service_request_id, :author]
 
   alias_attribute :service_request_id, :id
   alias_attribute :comment, :freitext
@@ -24,12 +24,5 @@ class Comment
         email: author,
         freitext: freitext,
     }
-  end
-
-  private
-  def serializable_methods(options)
-    ret = []
-    ret << :author if options[:author]
-    ret
   end
 end

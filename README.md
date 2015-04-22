@@ -160,7 +160,7 @@ Parameters:
 
 | Name  | Required  | Type  | Notes  |
 |:--|:-:|:-:|:-:|
-| api_key | - | String | API-Key |
+| api_key | X | String | API-Key |
 | email | X | String | Author-Email |
 | service_code | X | Integer | Category-ID |
 | title | X | String | Title (max. 300 character) |
@@ -244,7 +244,7 @@ Parameters:
 | Name  | Required  | Type  | Notes  |
 |:--|:-:|:-:|:-:|
 | service_request_id | X | Integer | |
-| api_key | - | String | If ```api_key``` passed and ```read_comment_author``` permission is configured for given ```api_key``` the author will be displayed. |
+| api_key | X | String | |
 
 Sample Response:
 
@@ -270,6 +270,7 @@ Parameters:
 | Name  | Required  | Type  |
 |:--|:-:|:-:|
 | service_request_id | X | Integer |
+| api_key | X | String | |
 | author | X | String |
 | comment | X | String |
 

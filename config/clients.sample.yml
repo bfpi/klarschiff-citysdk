@@ -1,9 +1,11 @@
 #
 # Mögliche Permissions:
 #
-#  read_comment_author  - Lob/Hinweis/Kritik - Ersteller Email lesen
+#  create_comments      - Lob/Hinweis/Kritik - lesen /requests/comments/create
+#  read_comments        - Lob/Hinweis/Kritik - lesen /requests/comments/index
 #  create_notes         - interne Kommentare anlegen /requests/notes/create
 #  read_notes           - interne Kommentare lesen /requests/notes/index
+#  create_request       - Vorgang anlegen /requests/create
 #  update_request       - Vorgang bearbeiten /requests/update
 #  request_job_details  - Auftrags-Daten (Auftrag-Status, Priorität, Delegation)
 #

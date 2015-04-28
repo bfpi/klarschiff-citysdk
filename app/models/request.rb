@@ -13,8 +13,8 @@ class Request
 
   attr_accessor :id, :version, :datum, :typ, :betreff, :adresse, :statusKommentar, :kategorie, :details, :zustaendigkeitFrontend,
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
-                :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch, :job_priority, :media,
-                :job_status, :job_detail_attributes, :priority, :delegation, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn
+                :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch, :media,
+                :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn
 
   self.serialization_attributes = [:service_request_id]
 
@@ -103,6 +103,10 @@ class Request
 
   def photo_required=(value)
     @fotowunsch = value
+  end
+
+  def job_priority=(value)
+    @auftragPrioritaet = value
   end
 
   def job_status

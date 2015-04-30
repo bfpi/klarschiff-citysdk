@@ -14,7 +14,8 @@ class Request
   attr_accessor :id, :version, :datum, :typ, :betreff, :adresse, :statusKommentar, :kategorie, :details, :zustaendigkeitFrontend,
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
                 :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch, :media,
-                :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn
+                :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn,
+                :betreffFreigabeStatus, :detailsFreigabeStatus, :fotoFreigabeStatus
 
   self.serialization_attributes = [:service_request_id]
 
@@ -89,8 +90,16 @@ class Request
     image(IMAGE_SIZE_NORMAL)
   end
 
+  def title
+    approval_status(betreffFreigabeStatus, @betreff)
+  end
+
   def title=(value)
     @betreff= value
+  end
+
+  def description
+    approval_status(detailsFreigabeStatus, @details)
   end
 
   def description=(value)
@@ -121,7 +130,7 @@ class Request
   end
 
   def job_status=(value)
-    auftragStatus = case value
+    @auftragStatus = case value
       when "UNCHECKED"
         "nicht_abgehakt"
       when "CHECKED"
@@ -178,7 +187,14 @@ class Request
 
   private
   def image(size)
-    self.send(size).blank? ? nil : "#{ KS_IMAGES_URL }#{ self.send(size) }"
+    return nil if self.send(size).blank?
+
+    if fotoFreigabeStatus.eql?("intern")
+      "#{ $request.protocol }#{ $request.host_with_port }#{
+      ActionController::Base.new.view_context.asset_url("#{ size }.jpg") }"
+    else
+      "#{ KS_IMAGES_URL }#{ self.send(size) }"
+    end
   end
 
   def images
@@ -199,5 +215,9 @@ class Request
             :updated_datetime, :expected_datetime, :address, :adress_id, :lat, :long, :media_url,
             :zipcode] unless options[:show_only_id]
     ret
+  end
+
+  def approval_status(approval_status, return_text)
+    approval_status.eql?("intern") ? "redaktionelle Prüfung ausstehend" : return_text
   end
 end

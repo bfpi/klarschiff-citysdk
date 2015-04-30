@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter do
     check_auth
+    $request = request
   end
 
   rescue_from ErrorMessage do |ex|

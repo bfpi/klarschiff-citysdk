@@ -1,7 +1,7 @@
-module Geokodierung
+module Geocoder
 
   def self.find(adresse)
-    uri = URI("#{ GEOKODIERUNG_URL }")
+    uri = URI(GEOCODER_URL)
     pattern = Regexp.new(/(\d{5})*(?:\.? |\.|,)*([a-zA-Z \.]*)\s(\d*)([a-zA-Z]*)(?:\.? |\.|,)*(\d{5})*/)
 
     pattern.match(adresse)

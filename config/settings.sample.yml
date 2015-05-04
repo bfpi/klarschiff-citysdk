@@ -1,0 +1,6 @@
+constants:
+  jurisdiction_id: rostock.de
+
+  geocoder_url: https://geo.sv.rostock.de/api/geokodierung
+  ks_backend_service_url: http://localhost:8015/backend/service/
+  ks_images_url: http://klarschiff-test/hgw/fotos/

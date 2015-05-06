@@ -35,8 +35,4 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  KS_BACKEND_SERVICE_URL = 'http://localhost:8015/backend/service/'
-  KS_IMAGES_URL = 'http://klarschiff-test/hgw/fotos/'
-  GEOKODIERUNG_URL = 'https://geo.sv.rostock.de/api/geokodierung'
 end

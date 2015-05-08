@@ -95,7 +95,8 @@ class Request
   end
 
   def title=(value)
-    @betreff= value
+    return if betreffFreigabeStatus == "intern"
+    @betreff = value
   end
 
   def description
@@ -103,7 +104,8 @@ class Request
   end
 
   def description=(value)
-    @details= value
+    return if detailsFreigabeStatus == "intern"
+    @details = value
   end
 
   def status_notes=(value)

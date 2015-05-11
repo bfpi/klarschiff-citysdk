@@ -444,3 +444,21 @@ Sample Response:
     
 - Konfiguration der Applikation (Anpassung an die entsprechende Umgebung)
   - Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sampl.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
+  - Konfigurationen in der `config/settings.yml`
+    - Interne Vorgabewerte werden als Konstanten in dem Block `constants` konfiguriert.
+    - Weitere Blöcke sind bisher nicht implementiert.
+  - Konfigurationen in der `config/clients.yml`
+    In dieser Datei erfolgt die Berechtigungsdefinition für die zu unterstützenden API-Clients.
+    - Jeder neue Client wird mit einem eigenene API-Key als Schlüssel in dieser Datei eingefügt.
+    - Unterhalb dieses Schlüssels können folgende Werte konfiguriert werden:
+      - `name`, ist optional, soll aber für die Verständlichkeit einen Bezeichner des API-Clients tragen können (z.B. Prüf- und Protokoll-Client).
+      - `backend_auth_code`, konfiguriert den Authorisierungsschlüssel für die erweiterte Kommunikation mit dem Backend. Dieser muss mit dem Property-Wert `auth.kod_code` in der `settings.properties` im Backend der jeweiligen Zielumgebung übereinstimmen.
+      - `permissions`, definiert die für diesen Client erlaubten Berechtigungen. Die Definition erfolgt als YAML-Array, also ein Eintrag pro Zeile. Die Werte werden als Ruby-Symbol geschrieben. Beispiel:
+    
+        ```yml
+        permissions:
+          - :create_comments
+          - :create_notes
+        ```
+  - Secrets (`config/secrets.yml`) zur Verschlüsselung der internen Nutzerdaten (Cookies, usw.)
+    - Die Konfiguration erfolgt hier nach Rails-Konvention pro Umgebung. Es muss aber nur die Variante mit der entsprechenden Umgebung konfiguriert werden. Also `production` in der Produktivumgebung und der Demo-Umgebung. Die RAILS_ENV `test` ist für automatisierte Tests im Framework vorbehalten.

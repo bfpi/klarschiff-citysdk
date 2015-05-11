@@ -441,5 +441,6 @@ Sample Response:
     ```bash
     rake assets:precompile
     ```
+    
 - Konfiguration der Applikation (Anpassung an die entsprechende Umgebung)
-  - Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sampl.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` bennant werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
+  - Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sampl.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.

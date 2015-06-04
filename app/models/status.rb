@@ -19,7 +19,7 @@ class Status
   end
 
   def self.valid_filter_values(values, target = :open311)
-    values = values.split(',') if values.is_a?(String)
+    values = values.split(/, ?/) if values.is_a?(String)
     (matches = case target
                  when :open311
                    OPEN311.keys

@@ -21,8 +21,8 @@ class RequestsController < ApplicationController
     filter = {}
     filter[:ids] = params[:service_request_id] unless params[:service_request_id].blank?
     filter[:category_id] = params[:service_code] unless params[:service_code].blank?
-    filter[:status] = Status.open311_for_backend(params[:status] ? params[:status].split(',') : 'open').join(',')
-    filter[:status] = Status.citysdk_for_backend(params[:detailed_status].split(',')) unless params[:detailed_status].blank?
+    filter[:status] = Status.open311_for_backend(params[:status] ? params[:status].split(/, ?/) : 'open').join(',')
+    filter[:status] = Status.citysdk_for_backend(params[:detailed_status].split(/, ?/)) unless params[:detailed_status].blank?
     filter[:date_from] = (params[:start_date].to_time.to_i * 1000) unless params[:start_date].blank?
     filter[:date_to] = (params[:end_date].to_time.to_i * 1000) unless params[:end_date].blank?
     filter[:updated_from] = (params[:updated_after].to_time.to_i * 1000) unless params[:updated_after].blank?

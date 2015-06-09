@@ -9,6 +9,7 @@ capybara-*.html
 /spec/tmp
 **.orig
 *.swp
+tags
 rerun.txt
 pickle-email-*.html
 public/assets

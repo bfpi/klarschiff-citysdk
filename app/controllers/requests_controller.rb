@@ -64,7 +64,8 @@ class RequestsController < ApplicationController
   #   media               optional - Foto (Base64-Encoded-String)
   def create
     request = Request.new
-    request.update_attributes(params)
+    default_title = params[:description].try(:truncate, 60, separator: ' ')
+    request.update_attributes({ title: default_title }.merge(params))
     request.update_service(params)
 
     raise request.errors_messages unless request.valid?

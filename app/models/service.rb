@@ -5,8 +5,11 @@ class Service
 
   self.serialization_attributes = [:service_code, :service_name, :description, :metadata, :type, :keywords, :group]
 
-  alias_attribute :service_code, :id
   alias_attribute :service_name, :name
+
+  def service_code
+    id.to_s
+  end
 
   def metadata
     false

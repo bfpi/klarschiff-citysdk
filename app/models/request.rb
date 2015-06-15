@@ -67,7 +67,7 @@ class Request
   end
 
   def service_code
-    kategorie ? kategorie['id'] : nil
+    kategorie ? kategorie['id'].to_s : nil
   end
 
   def service_name

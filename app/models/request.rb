@@ -42,8 +42,10 @@ class Request
   end
 
   def address_string=(value)
-    return if value.blank? || (!lat.blank? && !long.blank?)
-    @long, @lat = Geocoder.find(value)['features'].first['geometry']['coordinates']
+    return if value.blank? || (lat.present? && long.present?)
+    if Geocoder.valid?(value)
+      @long, @lat = Geocoder.find(value)['features'].first['geometry']['coordinates']
+    end
   end
 
   def positionWGS84

@@ -54,35 +54,39 @@ module KSBackend
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")
     uri.query = URI.encode_www_form(params) unless params.blank?
 
-    begin
-      res = Net::HTTP.get_response(uri)
-    rescue Exception
-      raise ErrorMessage.new(I18n.t("backend.unavailable"))
-    end
-    self.handle_response res.body, response_class, only_one
+    self.handle_response uri, Net::HTTP::Get.new(uri), response_class, only_one
   end
 
   def self.post(be_method, params, response_class, only_one = false)
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")
 
-    begin
-      res = Net::HTTP.post_form(uri, params)
-    rescue Exception
-      raise ErrorMessage.new(I18n.t("backend.unavailable"))
-    end
-    self.handle_response res.body, response_class, only_one
+    req = Net::HTTP::Post.new(uri.path)
+    req.set_form_data(params)
+
+    self.handle_response uri, req, response_class, only_one
   end
 
-  def self.handle_response(response, response_class, only_one)
+  def self.handle_response(uri, req, response_class, only_one)
     begin
-      return response_class.new(JSON.parse(response)) if only_one
+      req['Accept-Charset'] = 'UTF-8'
+      response = Net::HTTP.start(uri.host, uri.port) do |http|
+        http.request(req)
+      end
+    rescue Exception
+      Rails.logger.error "Exception: #{ $!.inspect }, #{ $!.message }\n  " << $!.backtrace.join("\n  ")
+      raise ErrorMessage.new(I18n.t("backend.unavailable"))
+    end
 
-      JSON.parse(response).map do |elem|
+    result = response.body.force_encoding('UTF-8')
+    begin
+      return response_class.new(JSON.parse(result)) if only_one
+
+      JSON.parse(result).map do |elem|
         response_class.new(elem) if elem
       end
     rescue Exception
-      raise ErrorMessage.new(response)
+      Rails.logger.error "Exception: #{ $!.inspect }, #{ $!.message }\n  " << $!.backtrace.join("\n  ")
+      raise ErrorMessage.new(result)
     end
   end
-
 end

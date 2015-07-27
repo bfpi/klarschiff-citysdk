@@ -158,7 +158,7 @@ class Request
   end
 
   def extended_attributes
-    ea = { detailed_status: detailed_status, detailed_status_datetime: format_date(detailed_status_datetime),
+    ea = { title: title, detailed_status: detailed_status, detailed_status_datetime: format_date(detailed_status_datetime),
            media_urls: images, photo_required: photo_required, trust: trust, votes: votes }
     ea.merge!({ delegation: delegation, job_status: job_status, job_priority: job_priority }) if @job_detail_attributes
     ea

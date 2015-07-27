@@ -2,7 +2,7 @@ class Status
   CITY_SDK = { 'PENDING' => 'gemeldet', 'RECEIVED' => 'offen', 'IN_PROCESS' => 'inBearbeitung',
                'PROCESSED' => 'abgeschlossen', 'REJECTED' => 'wirdNichtBearbeitet' }
 
-  OPEN311 = { 'OPEN' => ['gemeldet', 'offen', 'inBearbeitung'], 'CLOSED' => ['abgeschlossen', 'wirdNichtBearbeitet'] }
+  OPEN311 = { 'open' => ['gemeldet', 'offen', 'inBearbeitung'], 'closed' => ['abgeschlossen', 'wirdNichtBearbeitet'] }
 
   def initialize(status)
     @city_sdk = CITY_SDK.detect { |_k, v| v == status }.first
@@ -11,7 +11,7 @@ class Status
   end
 
   def self.open311_for_backend(open311_status)
-    OPEN311.slice(*Array(open311_status).map(&:upcase)).values.flatten
+    OPEN311.slice(*Array(open311_status).map(&:downcase)).values.flatten
   end
 
   def self.citysdk_for_backend(citysdk_status)
@@ -21,13 +21,13 @@ class Status
   def self.valid_filter_values(values, target = :open311)
     values = values.split(/, ?/) if values.is_a?(String)
     (matches = case target
-                 when :open311
-                   OPEN311.keys
-                 when :city_sdk
-                   CITY_SDK.keys
-                 else
-                   raise 'Unknown status target'
-               end & values.map(&:upcase)) && matches.size == values.size
+               when :open311
+                 OPEN311.keys
+               when :city_sdk
+                 CITY_SDK.keys
+               else
+                 raise 'Unknown status target'
+               end.map(&:upcase) & values.map(&:upcase)) && matches.size == values.size
   end
 
   def to_city_sdk

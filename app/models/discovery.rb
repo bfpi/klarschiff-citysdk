@@ -9,7 +9,7 @@ class Discovery
   alias_attribute :service_name, :name
 
   def changeset
-    '2015-02-27 14:20'
+    '2015-08-14 12:33'
   end
 
   def contact
@@ -22,7 +22,7 @@ class Discovery
 
   def endpoints
     { specification: 'http://wiki.open311.org/GeoReport_v2', endpoint: [
-        { url: nil, changeset: '2015-02-27 14:20', type: 'production', formats: ['text/json', 'application/json'] }
+        { url: nil, changeset: changeset, type: 'production', formats: ['text/xml', 'application/json'] }
     ] }
   end
 

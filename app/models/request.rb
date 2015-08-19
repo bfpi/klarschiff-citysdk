@@ -5,17 +5,16 @@ class Request
   include ValidationErrorFormatter
 
   validates :service_code, presence: true
-  validates :title, presence: true
   validates :description, presence: true
   validate do
     errors.add(:position, I18n.t("activemodel.errors.models.request.attributes.position.invalid")) if lat.blank? && long.blank?
   end
 
-  attr_accessor :id, :version, :datum, :typ, :betreff, :adresse, :statusKommentar, :kategorie, :details, :zustaendigkeitFrontend,
+  attr_accessor :id, :version, :datum, :typ, :adresse, :statusKommentar, :kategorie, :beschreibung, :zustaendigkeitFrontend,
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
                 :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch, :media,
                 :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn,
-                :betreffFreigabeStatus, :detailsFreigabeStatus, :fotoFreigabeStatus
+                :beschreibungFreigabeStatus, :fotoFreigabeStatus
 
   self.serialization_attributes = [:service_request_id]
 
@@ -25,8 +24,7 @@ class Request
 
   alias_attribute :service_request_id, :id
   alias_attribute :status_notes, :statusKommentar
-  alias_attribute :description, :details
-  alias_attribute :title, :betreff
+  alias_attribute :description, :beschreibung
   alias_attribute :autorEmail, :email
   alias_attribute :photo_required, :fotowunsch
   alias_attribute :agency_responsible, :zustaendigkeitFrontend
@@ -92,22 +90,13 @@ class Request
     image(IMAGE_SIZE_NORMAL)
   end
 
-  def title
-    approval_status(betreffFreigabeStatus, @betreff)
-  end
-
-  def title=(value)
-    return if betreffFreigabeStatus == "intern"
-    @betreff = value
-  end
-
   def description
-    approval_status(detailsFreigabeStatus, @details)
+    approval_status(beschreibungFreigabeStatus, @beschreibung)
   end
 
   def description=(value)
-    return if detailsFreigabeStatus == "intern"
-    @details = value
+    return if beschreibungFreigabeStatus == "intern"
+    @beschreibung = value
   end
 
   def status_notes=(value)
@@ -158,7 +147,7 @@ class Request
   end
 
   def extended_attributes
-    ea = { title: title, detailed_status: detailed_status, detailed_status_datetime: format_date(detailed_status_datetime),
+    ea = { detailed_status: detailed_status, detailed_status_datetime: format_date(detailed_status_datetime),
            media_urls: images, photo_required: photo_required, trust: trust, votes: votes }
     ea.merge!({ delegation: delegation, job_status: job_status, job_priority: job_priority }) if @job_detail_attributes
     ea
@@ -178,8 +167,7 @@ class Request
       kategorie: service_code,
       positionWGS84: positionWGS84,
       autorEmail: email,
-      betreff: betreff,
-      details: details,
+      beschreibung: beschreibung,
       bild: media,
       resultObjectOnSubmit: true,
       fotowunsch: photo_required
@@ -224,7 +212,7 @@ class Request
     ret = []
     ret << :extended_attributes if options[:extensions]
     ret |= [:status_notes, :status, :service_code, :service_name,
-            :description, :title, :agency_responsible, :service_notice, :requested_datetime,
+            :description, :agency_responsible, :service_notice, :requested_datetime,
             :updated_datetime, :expected_datetime, :address, :adress_id, :lat, :long, :media_url,
             :zipcode] unless options[:show_only_id]
     ret

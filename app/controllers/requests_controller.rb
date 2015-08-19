@@ -55,7 +55,6 @@ class RequestsController < ApplicationController
   #   api_key             pflicht - API-Key
   #   service_code        pflicht - Kategorie
   #   email               pflicht - Autor-Email
-  #   title               pflicht - Titel
   #   description         pflicht - Beschreibung
   #   lat                 optional - Latitude & Longitude ODER Address-String
   #   long                optional - Latitude & Longitude ODER Address-String
@@ -64,8 +63,7 @@ class RequestsController < ApplicationController
   #   media               optional - Foto (Base64-Encoded-String)
   def create
     request = Request.new
-    default_title = params[:description].try(:truncate, 60, separator: ' ')
-    request.update_attributes({ title: default_title }.merge(params))
+    request.update_attributes(params)
     request.update_service(params)
 
     raise request.errors_messages unless request.valid?
@@ -82,7 +80,6 @@ class RequestsController < ApplicationController
   #   service_request_id  pflicht  - Vorgang-ID
   #   email               pflicht  - Autor-Email
   #   service_code        optional - Kategorie
-  #   title               optional - Titel
   #   description         optional - Beschreibung
   #   lat                 optional - Latitude & Longitude ODER Address-String
   #   long                optional - Latitude & Longitude ODER Address-String

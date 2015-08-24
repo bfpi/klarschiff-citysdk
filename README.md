@@ -86,7 +86,6 @@ Sample Response:
     <service_code>request.service.code</service_code>
     <service_name>request.service.name</service_name>
     <description>request.description</description>
-    <title>request.title</title>
     <agency_responsible>request.agency_responsible</agency_responsible>
     <service_notice/>
     <requested_datetime>request.requested_datetime</requested_datetime>
@@ -126,7 +125,6 @@ Sample Response:
     <service_code>request.service.code</service_code>
     <service_name>request.service.name</service_name>
     <description>request.description</description>
-    <title>request.title</title>
     <agency_responsible>request.agency_responsible</agency_responsible>
     <service_notice/>
     <requested_datetime>request.requested_datetime</requested_datetime>
@@ -163,7 +161,6 @@ Parameters:
 | api_key | X | String | API-Key |
 | email | X | String | Author-Email |
 | service_code | X | Integer | Category-ID |
-| title | X | String | Title (max. 300 character) |
 | description | X | String | Description |
 | lat | - | Float | either lat & long or address_string |
 | long | - | Float | either lat & long or address_string |
@@ -193,7 +190,6 @@ Parameters:
 | api_key | X | String | API-Key |
 | email | X | String | Author-Email |
 | service_code | - | Integer | Category-ID |
-| title | - | String | Title (max. 300 character) |
 | description | - | String | Description |
 | lat | - | Float | either lat & long or address_string |
 | long | - | Float | either lat & long or address_string |
@@ -218,7 +214,6 @@ Sample Response:
     <service_code>request.service.code</service_code>
     <service_name>request.service.name</service_name>
     <description>request.description</description>
-    <title>request.title</title>
     <agency_responsible>request.agency_responsible</agency_responsible>
     <service_notice/>
     <requested_datetime>request.requested_datetime</requested_datetime>

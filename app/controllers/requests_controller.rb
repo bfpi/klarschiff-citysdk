@@ -33,9 +33,9 @@ class RequestsController < ApplicationController
       filter[:restriction_area] = "ST_Buffer(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326), #{ params[:radius] })"
     end
 
-    @requests = KSBackend.requests filter
-    respond_with(@requests, root: :service_requests, dasherize: false,
-      extensions: params[:extensions].try(:to_boolean), job_details: has_permission?(:request_job_details))
+    @requests = KSBackend.requests(filter)
+    respond_with @requests, root: :service_requests, dasherize: false,
+      extensions: params[:extensions].try(:to_boolean), job_details: has_permission?(:request_job_details)
   end
 
   # Einzelner Vorgang nach ID
@@ -45,9 +45,9 @@ class RequestsController < ApplicationController
   #   extensions          optional - Response mit erweitereten Attributsausgaben
   def show
     @request = KSBackend.request(params[:service_request_id])
-    respond_with(@request, root: :service_requests,
-                 dasherize: false, extensions: params[:extensions].try(:to_boolean),
-                 job_details: has_permission?(:request_job_details))
+    respond_with @request, root: :service_requests, dasherize: false,
+      extensions: params[:extensions].try(:to_boolean),
+      job_details: has_permission?(:request_job_details)
   end
 
   # Neuen Vorgang anlegen
@@ -63,15 +63,15 @@ class RequestsController < ApplicationController
   #   media               optional - Foto (Base64-Encoded-String)
   def create
     request = Request.new
-    request.update_attributes(params)
-    request.update_service(params)
+    request.update_attributes params.slice(:email, :service_code, :description, :lat, :long,
+                                           :address_string, :photo_required, :media)
 
     raise request.errors_messages unless request.valid?
-    backend_params = request.to_backend_create_params
-    client = current_client(params)
-    backend_params[:authCode] = client[:backend_auth_code].presence if client
-    respond_with(Array.wrap(KSBackend.create_request(backend_params)), root: :service_requests, location: requests_url,
-                 dasherize: false, show_only_id: true)
+
+    obj = Array.wrap(KSBackend.create_request(backend_params(
+      request.to_backend_create_params)))
+    respond_with obj, root: :service_requests, location: requests_url,
+      dasherize: false, show_only_id: true
   end
 
   # Vorgang aktualisieren
@@ -94,15 +94,30 @@ class RequestsController < ApplicationController
   #   job_priority        optional - Auftrag-Priorität
   def update
     request = KSBackend.request(params[:service_request_id]).first
-    request.update_attributes(params)
-    request.update_service(params)
+    if status = params[:detailed_status].presence
+      unless status.in?(Status::PERMISSABLE_CITY_SDK_KEYS | [request.detailed_status])
+        request.errors.add :detailed_status,
+          I18n.t("activemodel.errors.models.request.attributes.detailed_status.forbidden")
+        raise request.errors_messages
+      end
+    end
+    request.update_attributes params.slice(:email, :service_code, :description, :lat, :long,
+                                           :address_string, :photo_required, :media,
+                                           :detailed_status, :status_notes, :priority,
+                                           :delegation, :job_status, :job_priority)
 
-    backend_params = request.to_backend_update_params
-    client = current_client(params)
-    backend_params[:authCode] = client[:backend_auth_code].presence if client
+    obj = Array.wrap(KSBackend.update_request(backend_params(
+      request.to_backend_update_params)))
+    respond_with obj, root: :service_requests, location: requests_url,
+      dasherize: false, show_only_id: true, params[:format].to_sym => obj
+  end
 
-    response_object = Array.wrap(KSBackend.update_request(backend_params))
-    respond_with(response_object, root: :service_requests, location: requests_url,
-                 dasherize: false, show_only_id: true, params[:format].to_sym => response_object)
+  private
+
+  def backend_params(options = {})
+    if client = current_client
+      options[:authCode] = client[:backend_auth_code].presence
+    end
+    options
   end
 end

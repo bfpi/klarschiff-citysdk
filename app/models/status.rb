@@ -2,7 +2,10 @@ class Status
   CITY_SDK = { 'PENDING' => 'gemeldet', 'RECEIVED' => 'offen', 'IN_PROCESS' => 'inBearbeitung',
                'PROCESSED' => 'abgeschlossen', 'REJECTED' => 'wirdNichtBearbeitet' }
 
-  OPEN311 = { 'open' => ['gemeldet', 'offen', 'inBearbeitung'], 'closed' => ['abgeschlossen', 'wirdNichtBearbeitet'] }
+  PERMISSABLE_CITY_SDK_KEYS = %w(IN_PROCESS PROCESSED REJECTED)
+
+  OPEN311 = { 'open' => ['gemeldet', 'offen', 'inBearbeitung'],
+              'closed' => ['abgeschlossen', 'wirdNichtBearbeitet'] }
 
   def initialize(status)
     @city_sdk = CITY_SDK.detect { |_k, v| v == status }.first

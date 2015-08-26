@@ -19,6 +19,8 @@ de:
           attributes:
             description:
               blank: Es wurde keine Beschreibung übergeben
+            detailed_status:
+              forbidden: Der übergebene Status ist für diesen Vorgang nicht erlaubt
             position:
               invalid: Es konnte keine gültige Position ermittelt werden
             service_code:

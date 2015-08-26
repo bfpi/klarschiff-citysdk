@@ -153,9 +153,9 @@ class Request
     ea
   end
 
-  def update_service(values)
-    if values["service_code"] && values["service_code"].is_i?
-      sc = KSBackend.service(values["service_code"].to_i)
+  def service_code=(value)
+    if value.is_i?
+      sc = KSBackend.service(value.to_i)
       @kategorie = sc.instance_values
       @typ = sc.parent['typ'] if sc.parent
     end

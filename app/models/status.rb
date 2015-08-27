@@ -7,6 +7,8 @@ class Status
   OPEN311 = { 'open' => ['gemeldet', 'offen', 'inBearbeitung'],
               'closed' => ['abgeschlossen', 'wirdNichtBearbeitet'] }
 
+  NON_PUBLIC = "intern"
+
   def initialize(status)
     @city_sdk = CITY_SDK.detect { |_k, v| v == status }.first
     @open311 = OPEN311.detect { |_k, v| v.include?(status) }.first

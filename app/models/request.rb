@@ -95,7 +95,7 @@ class Request
   end
 
   def description=(value)
-    return if beschreibungFreigabeStatus == "intern"
+    return if beschreibungFreigabeStatus.eql?(Status::NON_PUBLIC)
     @beschreibung = value
   end
 
@@ -152,6 +152,7 @@ class Request
 
   def extended_attributes
     ea = { detailed_status: detailed_status, detailed_status_datetime: format_date(detailed_status_datetime),
+           description_public: !beschreibungFreigabeStatus.eql?(Status::NON_PUBLIC),
            media_urls: images, photo_required: photo_required, trust: trust, votes: votes }
     ea.merge!({ delegation: delegation, job_status: job_status, job_priority: job_priority }) if @job_detail_attributes
     ea
@@ -194,7 +195,7 @@ class Request
   def image(size)
     return nil if self.send(size).blank?
 
-    if fotoFreigabeStatus.eql?("intern")
+    if fotoFreigabeStatus.eql?(Status::NON_PUBLIC)
       "#{ $request.protocol }#{ $request.host_with_port }#{
       ActionController::Base.new.view_context.asset_url("#{ size }.jpg") }"
     else
@@ -223,6 +224,6 @@ class Request
   end
 
   def approval_status(approval_status, return_text)
-    approval_status.eql?("intern") ? "redaktionelle Prüfung ausstehend" : return_text
+    approval_status.eql?(Status::NON_PUBLIC) ? "redaktionelle Prüfung ausstehend" : return_text
   end
 end

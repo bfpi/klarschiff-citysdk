@@ -1,5 +1,7 @@
 class RequestsController < ApplicationController
-  skip_before_filter :validate_service_request_id, only: :index
+  skip_before_action :validate_service_request_id, only: :index
+  before_action :encode_params, only: [:create, :update]
+
 
   # Liste von Vorgängen
   # params:
@@ -119,5 +121,13 @@ class RequestsController < ApplicationController
       options[:authCode] = client[:backend_auth_code].presence
     end
     options
+  end
+
+  def encode_params
+    params.each do |k, v|
+      if k.in? %w(email description address_string status_notes delegation)
+        params[k] = v.force_encoding("ISO-8859-1").encode("UTF-8") unless v.is_utf8?
+      end
+    end
   end
 end

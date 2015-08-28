@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   get     'discovery'                    => 'discovery#index'
 
+  get     'coverage'                     => 'coverage#valid'
+
   get     'services'                     => 'services#index'
   get     'services/:service_id'         => 'services#show'
 

@@ -383,6 +383,27 @@ Sample Response:
 </votes>
 ```
 
+### Get Service Definition
+<code>http://[API endpoint]/coverage.[format]</code>
+
+HTTP Method: GET
+
+Parameters:
+
+| Name  | Required  | Type  |
+|:--|:-:|:-:|
+| api_key | X | String |
+| lat | X | Float | latitude value |
+| long | X | Float | longitude value |
+
+Sample Response:
+
+```xml
+<hash>
+  <result type="boolean">false</result>
+</hash>
+```
+
 ## Installation
 ### Voraussetzungen
 - RVM / oder andere Rubyversionsverwaltung

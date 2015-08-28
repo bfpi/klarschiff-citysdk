@@ -49,6 +49,13 @@ module KSBackend
     self.post "missbrauchsmeldung", parameter, Abuse, true
   end
 
+  def self.position_valid?(pos = {})
+    return false if pos[:lat].blank? || pos[:long].blank?
+    uri = URI("#{ KS_BACKEND_SERVICE_URL }position")
+    uri.query = URI.encode_www_form(positionWGS84: "POINT (#{ pos[:lat] } #{ pos[:long] })")
+    Net::HTTP.get_response(uri).is_a? Net::HTTPOK
+  end
+
   private
   def self.get(be_method, params, response_class, only_one = false)
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")

@@ -36,4 +36,4 @@ config/settings.yml
 bower.json
 
 .idea
-passenger.*.lock
+passenger.*.pid*

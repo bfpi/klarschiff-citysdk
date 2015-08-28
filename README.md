@@ -383,7 +383,7 @@ Sample Response:
 </votes>
 ```
 
-### Get Service Definition
+### Get Position Coverage
 <code>http://[API endpoint]/coverage.[format]</code>
 
 HTTP Method: GET

@@ -1,16 +1,16 @@
 de:
   api_key:
     invalid: Der übergebene API-Key ist ungültig.
-    missing: Es wurde kein API-Key übertragen.
-    no_permision: Der API-Key hat nicht die benötigten Zugriffsrechte.
+    missing: Es wurde kein API-Key übergeben.
+    no_permision: Mit dem übergebenen API-Key stehen die benötigten Zugriffsrechte nicht zur Verfügung.
 
   backend:
-    unavailable: Klarschiff-Backend ist Momentan nicht erreichbar.
+    unavailable: Das Backend ist momentan nicht erreichbar.
 
   geocoding:
-    unavailable: Geokodierung ist Momentan nicht erreichbar.
-    blank_response: Koordinaten konnten nicht für die Adresse '%{address}' ermittelt werden.
-    invalid_address: Das Format der Adresse '%{address}' kann nicht zur Koordinatenermittung verwendet werden.
+    unavailable: Die API für die Geokodierung ist momentan nicht erreichbar.
+    blank_response: Für die Adresse '%{address}' konnten keine Koordinaten ermittelt werden.
+    invalid_address: Das Format der Adresse '%{address}' kann nicht zur Koordinatenermittlung verwendet werden.
 
   activemodel:
     errors:
@@ -18,12 +18,12 @@ de:
         request:
           attributes:
             description:
-              blank: Es wurde keine Beschreibung übergeben
+              blank: Es wurde keine Beschreibung übergeben.
             detailed_status:
-              forbidden: Der übergebene Status ist für diesen Vorgang nicht erlaubt
+              forbidden: Der übergebene Status ist für diese Meldung nicht erlaubt.
             position:
-              invalid: Es konnte keine gültige Position ermittelt werden
+              invalid: Es konnte keine gültige Position ermittelt werden.
             service_code:
-              blank: Es wurde keine Kategorie übergeben
+              blank: Es wurde keine Kategorie übergeben.
             title:
-              blank: Es wurde kein Titel übergeben
+              blank: Es wurde kein Titel übergeben.

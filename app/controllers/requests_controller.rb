@@ -32,7 +32,7 @@ class RequestsController < ApplicationController
     filter[:agency_responsible] = params[:agency_responsible] unless params[:agency_responsible].blank?
     filter[:negation] = params[:negation] unless params[:negation].blank?
     if params[:lat] && params[:long] && params[:radius]
-      filter[:restriction_area] = "ST_Buffer(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326), #{ params[:radius] })"
+      filter[:restriction_area] = "CAST(ST_Buffer(CAST(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326) AS geography), #{ params[:radius] }) AS geometry)"
     end
 
     @requests = KSBackend.requests(filter)

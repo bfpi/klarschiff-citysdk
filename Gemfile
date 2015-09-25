@@ -10,3 +10,6 @@ gem 'responders'
 gem 'jbuilder', '~> 2.0'
 
 gem 'rmagick'
+
+gem 'oj'
+gem 'oj_mimic_json'

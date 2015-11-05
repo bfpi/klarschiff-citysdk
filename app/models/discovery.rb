@@ -9,21 +9,23 @@ class Discovery
   alias_attribute :service_name, :name
 
   def changeset
-    '2015-08-14 12:33'
+    '2015-11-05 08:43'
   end
 
   def contact
-    'BFPI'
+    'Hansestadt Rostock, Kataster-, Vermessungs- und Liegenschaftsamt, Holbeinplatz 14, 18069 Rostock, Telefon: +49 381 381-6281, Telefax: +49 381 381-6902, E-Mail: klarschiff.hro@rostock.de'
   end
 
   def key_service
-    'Aktuell nicht verfügbar'
+    'klarschiff.hro@rostock.de'
   end
 
   def endpoints
-    { specification: 'http://wiki.open311.org/GeoReport_v2', endpoint: [
-        { url: nil, changeset: changeset, type: 'production', formats: ['text/xml', 'application/json'] }
-    ] }
+    [
+        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'https://geo.sv.rostock.de/citysdk', changeset: changeset, type: 'production', formats: ['application/json', 'text/xml'] },
+        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'http://support.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] },
+        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'http://demo.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] }
+    ]
   end
 
   private

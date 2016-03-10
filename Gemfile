@@ -13,3 +13,5 @@ gem 'rmagick'
 
 gem 'oj'
 gem 'oj_mimic_json'
+
+gem 'dalli'

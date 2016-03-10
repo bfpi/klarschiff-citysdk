@@ -16,6 +16,14 @@ Bundler.require(*Rails.groups)
 
 module KlarschiffCitySDK
   class Application < Rails::Application
+    require 'yaml'
+    File.open(Rails.root.join('config', 'settings.yml')) { |file|
+      YAML::load file }['constants'].each do |name, value|
+        Kernel.const_set name.upcase, value
+      end
+
+    config.cache_store = :dalli_store, MEMCACHE_SERVER_URL, { :namespace => MEMCACHE_SERVER_NAMESPACE }
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

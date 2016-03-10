@@ -1,12 +1,12 @@
 module KSBackend
   require 'net/http'
 
-  def self.requests(params = nil)
-    self.get "vorgaenge", params, Request
+  def self.requests(params = nil, response_class = RequestTimes)
+    self.check_versions self.get("vorgaenge", { just_times: true }.merge(params), RequestTimes)
   end
 
   def self.request(id)
-    self.get "vorgaenge", { id: id }, Request
+    self.check_versions self.get("vorgaenge", { id: id, just_times: true }, RequestTimes)
   end
 
   def self.create_request(parameter)
@@ -95,5 +95,24 @@ module KSBackend
       Rails.logger.error "Exception: #{ $!.inspect }, #{ $!.message }\n  " << $!.backtrace.join("\n  ")
       raise ErrorMessage.new(result)
     end
+  end
+
+  def self.check_versions response_times
+    return_list = []
+    reload_ids = []
+    response_times.each do |rt|
+      cached = Rails.cache.read(rt.id)
+      if cached.blank?
+        reload_ids << rt.id
+      else
+        return_list << cached
+      end 
+    end
+
+    self.get("vorgaenge", { ids: reload_ids }, Request).each do |request|
+      Rails.cache.write(request.id, request)
+      return_list << request
+    end unless reload_ids.blank?
+    return_list
   end
 end

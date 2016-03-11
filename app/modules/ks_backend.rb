@@ -102,7 +102,7 @@ module KSBackend
     reload_ids = []
     response_times.each do |rt|
       cached = Rails.cache.read(rt.id)
-      if cached.blank?
+      if cached.blank? || rt.version > cached.version
         reload_ids << rt.id
       else
         return_list << cached

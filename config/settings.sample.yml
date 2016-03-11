@@ -7,3 +7,6 @@ constants:
 
   image_max_height: 720
   image_max_width: 720
+
+  memcache_server_url: localhost:11211
+  memcache_server_namespace: klarschiff

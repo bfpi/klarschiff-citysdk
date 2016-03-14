@@ -12,7 +12,7 @@ class Request
 
   attr_accessor :id, :version, :datum, :typ, :adresse, :statusKommentar, :kategorie, :beschreibung, :zustaendigkeitFrontend,
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
-                :zipcode, :lat, :long, :email, :trustLevel, :unterstuetzerCount, :fotowunsch, :media,
+                :zipcode, :lat, :long, :email, :trust, :unterstuetzerCount, :fotowunsch, :media,
                 :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn,
                 :beschreibungFreigabeStatus, :fotoFreigabeStatus
 
@@ -29,7 +29,6 @@ class Request
   alias_attribute :photo_required, :fotowunsch
   alias_attribute :agency_responsible, :zustaendigkeitFrontend
   alias_attribute :address, :adresse
-  alias_attribute :trust, :trustLevel
   alias_attribute :votes, :unterstuetzerCount
   alias_attribute :detailed_status_datetime, :statusDatum
   alias_attribute :job_priority, :auftragPrioritaet

@@ -1,11 +1,11 @@
 class Status
   CITY_SDK = { 'PENDING' => 'gemeldet', 'RECEIVED' => 'offen', 'IN_PROCESS' => 'inBearbeitung',
-               'PROCESSED' => 'abgeschlossen', 'REJECTED' => 'wirdNichtBearbeitet' }
+               'PROCESSED' => 'geloest', 'REJECTED' => 'nichtLoesbar' }
 
   PERMISSABLE_CITY_SDK_KEYS = %w(IN_PROCESS PROCESSED REJECTED)
 
   OPEN311 = { 'open' => ['gemeldet', 'offen', 'inBearbeitung'],
-              'closed' => ['abgeschlossen', 'wirdNichtBearbeitet'] }
+              'closed' => ['geloest', 'nichtLoesbar'] }
 
   NON_PUBLIC = "intern"
 

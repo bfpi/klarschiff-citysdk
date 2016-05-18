@@ -459,7 +459,7 @@ Sample Response:
     ```
     
 - Konfiguration der Applikation (Anpassung an die entsprechende Umgebung)
-  - Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sampl.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
+  - Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sample.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
   - Konfigurationen in der `config/settings.yml`
     - Interne Vorgabewerte werden als Konstanten in dem Block `constants` konfiguriert.
     - Weitere Blöcke sind bisher nicht implementiert.

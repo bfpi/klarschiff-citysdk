@@ -2,7 +2,7 @@ module KSBackend
   require 'net/http'
 
   def self.requests(params = nil, response_class = RequestTimes)
-    self.check_versions self.get("vorgaenge", { just_times: true }.merge(params), RequestTimes)
+    self.check_versions self.get("vorgaenge", { just_times: true }.merge(params), RequestTimes), params
   end
 
   def self.request(id)
@@ -97,7 +97,7 @@ module KSBackend
     end
   end
 
-  def self.check_versions response_times
+  def self.check_versions response_times, params = nil
     return_list = []
     reload_ids = []
     response_times.each do |rt|
@@ -109,7 +109,9 @@ module KSBackend
       end 
     end
 
-    self.get("vorgaenge", { ids: reload_ids }, Request).each do |request|
+    p = { ids: reload_ids }
+    p[:authCode] = params[:authCode] unless params[:authCode].blank? if params
+    self.get("vorgaenge",p , Request).each do |request|
       Rails.cache.write(request.id, request)
       return_list << request
     end unless reload_ids.blank?

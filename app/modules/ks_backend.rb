@@ -5,8 +5,8 @@ module KSBackend
     self.check_versions self.get("vorgaenge", { just_times: true }.merge(params), RequestTimes), params
   end
 
-  def self.request(id)
-    self.check_versions self.get("vorgaenge", { id: id, just_times: true }, RequestTimes)
+  def self.request(id, parameter = {})
+    self.check_versions self.get("vorgaenge", { id: id, just_times: true }.merge(parameter), RequestTimes)
   end
 
   def self.create_request(parameter)

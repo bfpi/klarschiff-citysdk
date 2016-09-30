@@ -1,8 +1,8 @@
 module KSBackend
   require 'net/http'
 
-  def self.requests(params = nil, response_class = RequestTimes)
-    self.check_versions self.get("vorgaenge", { just_times: true }.merge(params), RequestTimes), params
+  def self.requests(parameter = nil, response_class = RequestTimes)
+    self.check_versions self.get("vorgaenge", { just_times: true }.merge(parameter), RequestTimes), parameter
   end
 
   def self.request(id, parameter = {})
@@ -17,8 +17,8 @@ module KSBackend
     self.post "vorgangAktualisieren", parameter, Request, true
   end
 
-  def self.services(params = nil)
-    self.get "unterkategorien", params, Service
+  def self.services(parameter = nil)
+    self.get "unterkategorien", parameter, Service
   end
 
   def self.service(id)
@@ -57,18 +57,18 @@ module KSBackend
   end
 
   private
-  def self.get(be_method, params, response_class, only_one = false)
+  def self.get(be_method, parameter, response_class, only_one = false)
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")
-    uri.query = URI.encode_www_form(params) unless params.blank?
+    uri.query = URI.encode_www_form(parameter) unless parameter.blank?
 
     self.handle_response uri, Net::HTTP::Get.new(uri), response_class, only_one
   end
 
-  def self.post(be_method, params, response_class, only_one = false)
+  def self.post(be_method, parameter, response_class, only_one = false)
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")
 
     req = Net::HTTP::Post.new(uri.path)
-    req.set_form_data(params)
+    req.set_form_data(parameter)
 
     self.handle_response uri, req, response_class, only_one
   end
@@ -97,7 +97,7 @@ module KSBackend
     end
   end
 
-  def self.check_versions response_times, params = nil
+  def self.check_versions response_times, parameter = nil
     return_list = []
     reload_ids = []
     response_times.each do |rt|
@@ -110,7 +110,7 @@ module KSBackend
     end
 
     p = { ids: reload_ids }
-    p[:authCode] = params[:authCode] unless params[:authCode].blank? if params
+    p[:authCode] = parameter[:authCode] unless parameter[:authCode].blank? if parameter
     self.get("vorgaenge",p , Request).each do |request|
       Rails.cache.write(request.id, request)
       return_list << request

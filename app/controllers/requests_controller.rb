@@ -95,7 +95,7 @@ class RequestsController < ApplicationController
   #   job_status          optional - Auftrag-Status
   #   job_priority        optional - Auftrag-Priorität
   def update
-    request = KSBackend.request(params[:service_request_id]).first
+    request = KSBackend.request(params[:service_request_id], params[:api_key] ? backend_params({}) : {}).first
     if status = params[:detailed_status].presence
       unless status.in?(Status::PERMISSABLE_CITY_SDK_KEYS | [request.detailed_status])
         request.errors.add :detailed_status,

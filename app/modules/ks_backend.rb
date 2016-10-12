@@ -6,7 +6,7 @@ module KSBackend
   end
 
   def self.request(id, parameter = {})
-    self.check_versions self.get("vorgaenge", { id: id, just_times: true }.merge(parameter), RequestTimes)
+    self.check_versions self.get("vorgaenge", { id: id, just_times: true }.merge(parameter), RequestTimes), parameter
   end
 
   def self.create_request(parameter)
@@ -111,7 +111,7 @@ module KSBackend
 
     p = { ids: reload_ids }
     p[:authCode] = parameter[:authCode] unless parameter[:authCode].blank? if parameter
-    self.get("vorgaenge",p , Request).each do |request|
+    self.get("vorgaenge", p, Request).each do |request|
       Rails.cache.write(request.id, request)
       return_list << request
     end unless reload_ids.blank?

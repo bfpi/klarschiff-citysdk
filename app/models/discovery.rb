@@ -23,8 +23,8 @@ class Discovery
   def endpoints
     [
         { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'https://geo.sv.rostock.de/citysdk', changeset: changeset, type: 'production', formats: ['application/json', 'text/xml'] },
-        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'http://support.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] },
-        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'http://demo.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] }
+        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'https://support.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] },
+        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'https://demo.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] }
     ]
   end
 

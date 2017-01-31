@@ -65,7 +65,7 @@ class RequestsController < ApplicationController
   #   media               optional - Foto (Base64-Encoded-String)
   def create
     request = Request.new
-    request.update_attributes params.slice(:email, :service_code, :description, :lat, :long,
+    request.assign_attributes params.slice(:email, :service_code, :description, :lat, :long,
                                            :address_string, :photo_required, :media)
 
     raise request.errors_messages unless request.valid?
@@ -103,7 +103,7 @@ class RequestsController < ApplicationController
         raise request.errors_messages
       end
     end
-    request.update_attributes params.slice(:email, :service_code, :description, :lat, :long,
+    request.assign_attributes params.slice(:email, :service_code, :description, :lat, :long,
                                            :address_string, :photo_required, :media,
                                            :detailed_status, :status_notes, :priority,
                                            :delegation, :job_status, :job_priority)

@@ -15,7 +15,7 @@ class Requests::CommentsController < ApplicationController
   #   comment             pflicht  - Kommentar
   def create
     comment = Comment.new
-    comment.update_attributes(params)
+    comment.assign_attributes(params)
 
     backend_params = comment.to_backend_create_params
     client = current_client(params)

@@ -1,7 +1,7 @@
 class ServiceDefinition
   include CitySDKSerialization
 
-  attr_accessor :id, :name, :parent, :typ, :nameEscapeHtml
+  attr_accessor :id, :name, :parent
 
   self.serialization_attributes = [:service_code, :service_name, :keywords, :group]
 

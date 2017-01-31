@@ -10,7 +10,7 @@ module CitySDKSerialization
       JURISDICTION_ID
     end
 
-    def update_attributes(values)
+    def assign_attributes(values)
       values.each do |k, v|
         send("#{ k }=", v)
       end

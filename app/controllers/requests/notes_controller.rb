@@ -15,7 +15,7 @@ class Requests::NotesController < ApplicationController
   #   comment             pflicht  - Kommentar
   def create
     note = Note.new
-    note.update_attributes(params)
+    note.assign_attributes(params)
 
     backend_params = note.to_backend_create_params
     client = current_client(params)

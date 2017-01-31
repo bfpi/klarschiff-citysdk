@@ -7,7 +7,7 @@ class Requests::AbusesController < ApplicationController
   #   comment             pflicht  - Kommentar
   def create
     abuse = Abuse.new
-    abuse.update_attributes(params)
+    abuse.assign_attributes(params)
 
     respond_with(:requests, Array.wrap(KSBackend.create_abuse(abuse.to_backend_create_params)), root: :abuses,
                  dasherize: false, show_only_id: true, location: requests_abuses_url)

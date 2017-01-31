@@ -146,7 +146,7 @@ class Request
   end
 
   def attribute=(attributes)
-    update_attributes(attributes)
+    assign_attributes(attributes)
   end
 
   def extended_attributes

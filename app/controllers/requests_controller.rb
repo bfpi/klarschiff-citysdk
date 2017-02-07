@@ -37,7 +37,7 @@ class RequestsController < ApplicationController
       filter[:restriction_area] = "CAST(ST_Buffer(CAST(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326) AS geography), #{ params[:radius] }) AS geometry)"
     end
 
-    @requests = KSBackend.requests(backend_params(filter))
+    @requests = KSBackend.requests(params[:api_key] ? backend_params(filter) : filter)
     respond_with @requests, root: :service_requests, dasherize: false,
       extensions: params[:extensions].try(:to_boolean), job_details: has_permission?(:request_job_details)
   end
@@ -117,13 +117,6 @@ class RequestsController < ApplicationController
   end
 
   private
-
-  def backend_params(options = {})
-    if client = current_client
-      options[:authCode] = client[:backend_auth_code].presence
-    end
-    options
-  end
 
   def encode_params
     params.each do |k, v|

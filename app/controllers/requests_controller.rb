@@ -116,13 +116,6 @@ class RequestsController < ApplicationController
 
   private
 
-  def backend_params(options = {})
-    if client = current_client
-      options[:authCode] = client[:backend_auth_code].presence
-    end
-    options
-  end
-
   def encode_params
     params.each do |k, v|
       if k.in? %w(email description address_string status_notes delegation)

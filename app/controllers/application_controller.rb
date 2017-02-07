@@ -14,4 +14,12 @@ class ApplicationController < ActionController::Base
     respond_with error, root: :error_messages, dasherize: false, location: discovery_url,
                  status: ex.http_code || 422, request.format.symbol.to_sym => error
   end
+
+  def backend_params(options = {})
+    if client = current_client
+      options[:authCode] = client[:backend_auth_code].presence
+    end
+    options
+  end
+
 end

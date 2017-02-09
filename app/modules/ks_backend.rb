@@ -87,7 +87,7 @@ module KSBackend
     result = response.body.force_encoding('UTF-8')
     begin
       return response_class.new(JSON.parse(result)) if only_one
-
+      Rails.logger.info "RESULT: #{ result.inspect }"
       JSON.parse(result).map do |elem|
         response_class.new(elem) if elem
       end

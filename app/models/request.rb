@@ -22,6 +22,8 @@ class Request
   IMAGE_SIZE_NORMAL = 'fotoNormal'
   IMAGE_SIZE_THUMB = 'fotoThumb'
 
+  CITY_SDK_KEYWORDS = { 'problem' => 'problem', 'idea' => 'idee', 'tip' => 'tipp' }
+
   alias_attribute :service_request_id, :id
   alias_attribute :status_notes, :statusKommentar
   alias_attribute :description, :beschreibung
@@ -33,6 +35,10 @@ class Request
   alias_attribute :detailed_status_datetime, :statusDatum
   alias_attribute :job_priority, :auftragPrioritaet
   alias_attribute :delegation, :delegiertAn
+
+  def self.city_sdk_keywords_for_backend(keywords)
+    CITY_SDK_KEYWORDS.slice(*Array(keywords)).values.flatten
+  end
 
   def positionWGS84=(value)
     @lat, @long = value.gsub(/[A-Z()]*/, '').strip.split(" ")

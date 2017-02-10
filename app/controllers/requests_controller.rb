@@ -20,6 +20,7 @@ class RequestsController < ApplicationController
   #   long                optional - Schränkt den Bereich ein, in dem gesucht wird (benötigt: lat, long und radius)
   #   radius              optional - Schränkt den Bereich ein, in dem gesucht wird (benötigt: lat, long und radius)
   #   keyword             optional - Filter: Meldungstyp (Problem|Idee|Tipp)
+  #   max_requests        optional - Anzahl der neuesten Meldungen
   def index
     filter = {}
     filter[:ids] = params[:service_request_id] unless params[:service_request_id].blank?
@@ -32,7 +33,8 @@ class RequestsController < ApplicationController
     filter[:updated_to] = (params[:updated_before].to_time.to_i * 1000) unless params[:updated_before].blank?
     filter[:agency_responsible] = params[:agency_responsible] unless params[:agency_responsible].blank?
     filter[:negation] = params[:negation] unless params[:negation].blank?
-    filter[:typ] = Request.city_sdk_keywords_for_backend(params[:keyword]) unless params[:keyword].blank?
+    filter[:typ] = Request.city_sdk_keywords_for_backend(params[:keyword].split(/, ?/)) unless params[:keyword].blank?
+    filter[:max_requests] = params[:max_requests] unless params[:max_requests].blank?
     if params[:lat] && params[:long] && params[:radius]
       filter[:restriction_area] = "CAST(ST_Buffer(CAST(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326) AS geography), #{ params[:radius] }) AS geometry)"
     end

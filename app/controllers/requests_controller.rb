@@ -26,14 +26,14 @@ class RequestsController < ApplicationController
     filter[:ids] = params[:service_request_id] unless params[:service_request_id].blank?
     filter[:category_id] = params[:service_code] unless params[:service_code].blank?
     filter[:status] = Status.open311_for_backend(params[:status] ? params[:status].split(/, ?/) : 'open').join(',')
-    filter[:status] = Status.citysdk_for_backend(params[:detailed_status].split(/, ?/)) unless params[:detailed_status].blank?
+    filter[:status] = Status.citysdk_for_backend(params[:detailed_status].split(/, ?/)).presence || '' unless params[:detailed_status].nil?
     filter[:date_from] = (params[:start_date].to_time.to_i * 1000) unless params[:start_date].blank?
     filter[:date_to] = (params[:end_date].to_time.to_i * 1000) unless params[:end_date].blank?
     filter[:updated_from] = (params[:updated_after].to_time.to_i * 1000) unless params[:updated_after].blank?
     filter[:updated_to] = (params[:updated_before].to_time.to_i * 1000) unless params[:updated_before].blank?
     filter[:agency_responsible] = params[:agency_responsible] unless params[:agency_responsible].blank?
     filter[:negation] = params[:negation] unless params[:negation].blank?
-    filter[:typ] = Request.city_sdk_keywords_for_backend(params[:keyword].split(/, ?/)) unless params[:keyword].blank?
+    filter[:typ] = Request.city_sdk_keywords_for_backend(params[:keyword].split(/, ?/)).presence || '' unless params[:keyword].nil?
     filter[:max_requests] = params[:max_requests] unless params[:max_requests].blank?
     if params[:lat] && params[:long] && params[:radius]
       filter[:restriction_area] = "CAST(ST_Buffer(CAST(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326) AS geography), #{ params[:radius] }) AS geometry)"

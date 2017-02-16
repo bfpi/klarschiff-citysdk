@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get     'areas'                        => 'areas#index'
+
   get     'discovery'                    => 'discovery#index'
 
   get     'coverage'                     => 'coverage#valid'

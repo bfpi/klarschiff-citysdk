@@ -56,6 +56,10 @@ module KSBackend
     Net::HTTP.get_response(uri).is_a? Net::HTTPOK
   end
 
+  def self.areas(parameter = nil)
+    self.get 'grenzen', parameter, Area
+  end
+
   private
   def self.get(be_method, parameter, response_class, only_one = false)
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")

@@ -8,6 +8,6 @@ class AreasController < ApplicationController
     filter = {}
     filter[:ids] = params[:area_code] unless params[:area_code].blank?
     filter[:with_districts] = params[:with_districts] unless params[:with_districts].blank?
-    respond_with(KSBackend.areas(filter).each { |ar| ar.grenze = eval(ar.grenze || '') }, root: :areas, dasherize: false)
+    respond_with(KSBackend.areas(filter), root: :areas, dasherize: false)
   end
 end

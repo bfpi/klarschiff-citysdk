@@ -1,5 +1,7 @@
 class Area
-  include ActiveModel::Model
+  include CitySDKSerialization 
   
   attr_accessor :id, :name, :grenze
+
+  self.serialization_attributes = [:id, :name, :grenze]
 end

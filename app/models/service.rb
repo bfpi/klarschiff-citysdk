@@ -20,10 +20,10 @@ class Service
   end
 
   def keywords
-    parent['typ']
+    parent['typ'] if parent
   end
 
   def group
-    parent['name']
+    parent['name'] if parent
   end
 end

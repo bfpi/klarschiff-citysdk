@@ -9,10 +9,10 @@ class ServiceDefinition
   alias_attribute :service_name, :name
 
   def keywords
-    parent['typ']
+    parent['typ'] if parent
   end
 
   def group
-    parent['name']
+    parent['name'] if parent
   end
 end

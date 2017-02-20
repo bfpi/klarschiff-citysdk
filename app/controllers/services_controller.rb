@@ -1,7 +1,9 @@
 class ServicesController < ApplicationController
 
   def index
-    @services = KSBackend.services(params[:api_key] ? backend_params({}) : {})
+    options = {}
+    options.update(extensions: params[:extensions]) if params[:extensions]
+    @services = KSBackend.services(params[:api_key] ? backend_params(options) : options)
     respond_with(@services, root: :services, dasherize: false)
   end
 

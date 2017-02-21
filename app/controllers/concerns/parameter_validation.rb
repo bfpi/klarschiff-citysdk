@@ -3,7 +3,7 @@ module ParameterValidation
 
   included do
     private_instance_methods.select{ |m| m.to_s.start_with?("validate_") }.each do |method|
-      before_filter method
+      before_action method
     end
   end
 

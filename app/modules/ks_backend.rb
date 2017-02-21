@@ -60,6 +60,10 @@ module KSBackend
     self.get 'grenzen', parameter, Area
   end
 
+  def self.create_observation(parameter)
+    self.post 'geoRss', parameter, Observation, true
+  end
+
   private
   def self.get(be_method, parameter, response_class, only_one = false)
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")

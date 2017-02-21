@@ -1,7 +1,7 @@
 class Service
   include CitySDKSerialization
 
-  attr_accessor :id, :name, :description, :parent
+  attr_accessor :id, :name, :description, :parent, :typ
 
   self.serialization_attributes = [:service_code, :service_name, :description, :metadata, :type, :keywords, :group]
 
@@ -20,7 +20,7 @@ class Service
   end
 
   def keywords
-    parent['typ'] if parent
+    typ || parent['typ']
   end
 
   def group

@@ -1,9 +1,10 @@
 class AreasController < ApplicationController
-  #Liste von Gebietsgrenzen
-  #params:
-  # api_key         optional - API-Key
-  # area_code       optional - IDs der selektierten Stadtteile
-  # with_districts  optional - Response mit allen verfügbaren Stadtteilgrenzen
+  
+  # Liste von Gebietsgrenzen
+  # params:
+  #   api_key         optional - API-Key
+  #   area_code       optional - IDs der selektierten Stadtteile
+  #   with_districts  optional - Response mit allen verfügbaren Stadtteilgrenzen
   def index
     filter = {}
     filter[:ids] = params[:area_code] unless params[:area_code].blank?

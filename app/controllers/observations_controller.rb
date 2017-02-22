@@ -11,6 +11,6 @@ class ObservationsController < ApplicationController
   def create
     observation = Observation.new
     observation.assign_attributes params
-    obj = Array.wrap(KSBackend.create_observation(observation.to_backend_params))
+    respond_with(KSBackend.create_observation(observation.to_backend_params), root: :observations, dasherize: false)
   end
 end

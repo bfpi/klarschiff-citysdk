@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   put     'requests/:service_request_id' => 'requests#update'
   patch   'requests/:service_request_id' => 'requests#update'
 
+  post    'observations'                 => 'observations#create'
+
   namespace :requests do
     post  'abuses/:service_request_id'   => 'abuses#create', as: :abuses
 

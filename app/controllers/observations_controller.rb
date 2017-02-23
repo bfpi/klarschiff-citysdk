@@ -1,5 +1,4 @@
 class ObservationsController < ApplicationController
-  
   # Neue Beobachtungsfläche anlegen
   # params:
   #   area_code         optional - IDs der Stadtteilgrenze (-1 für Stadtgrenze)

@@ -21,6 +21,7 @@ class RequestsController < ApplicationController
   #   radius              optional - Schränkt den Bereich ein, in dem gesucht wird (benötigt: lat, long und radius)
   #   keyword             optional - Filter: Meldungstyp (Problem|Idee|Tipp)
   #   max_requests        optional - Anzahl der neuesten Meldungen
+  #   observation_key     optional - MD5-Hash der zugehörigen Beobachtungsfläche
   def index
     filter = {}
     filter[:ids] = params[:service_request_id] unless params[:service_request_id].blank?
@@ -35,6 +36,7 @@ class RequestsController < ApplicationController
     filter[:negation] = params[:negation] unless params[:negation].blank?
     filter[:typ] = Request.city_sdk_keywords_for_backend(params[:keyword].split(/, ?/)).presence || '' unless params[:keyword].nil?
     filter[:max_requests] = params[:max_requests] unless params[:max_requests].blank?
+    filter[:geoRssHash] = params[:observation_key] unless params[:observation_key].blank?
     if params[:lat] && params[:long] && params[:radius]
       filter[:restriction_area] = "CAST(ST_Buffer(CAST(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326) AS geography), #{ params[:radius] }) AS geometry)"
     end

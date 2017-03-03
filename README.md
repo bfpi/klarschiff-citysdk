@@ -74,6 +74,9 @@ Parameters:
 | lat | - | Double | restriction area (lat, long and radius required)
 | long | - | Double | restriction area (lat, long and radius required)
 | radius | - | Double | meter - restriction area (lat, long and radius required)
+| keyword | - | String | Options: problem, idea, tip |
+| max_requests | Integer | Maximum number of requests
+| observation_key | String | MD5-Hash of observed Area
 
 Sample Response:
 
@@ -402,6 +405,57 @@ Sample Response:
 <hash>
   <result type="boolean">false</result>
 </hash>
+```
+
+### Get observable Areas
+<code>http://[API endpoint]/areas.[format]</code>
+
+HTTP Method: GET
+
+Parameters:
+
+| Name | Required | Type |
+|:--|:-:|:-:|
+| api_key | X | String |
+| ids | | String |
+| with_districts | Boolean |
+
+Sample Response:
+
+```xml
+<areas>
+  <area>
+  <id>30</id>
+  <name>Biestow</name>
+  <grenze>MULTIPOLYGON (((...)))</grenze>
+  </area>
+  ...
+</areas>
+```
+
+### Create new Observation
+<code>http://[API endpoint]/observations.[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name | Required | Type |
+|:--|:-:|:-:|
+| api_key | X | String |
+| geometry | | String |
+| area_code | | String |
+| problems | | Boolean |
+| problem_service | | String |
+| ideas | | Boolean |
+| idea_service | | String |
+
+Sample Response:
+
+```xml
+<observation>
+  <rss-id>39a855f0a4924af3217a217c8dc78ece</rss-id>
+</observatio>
 ```
 
 ## Installation

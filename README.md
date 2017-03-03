@@ -75,8 +75,8 @@ Parameters:
 | long | - | Double | restriction area (lat, long and radius required)
 | radius | - | Double | meter - restriction area (lat, long and radius required)
 | keyword | - | String | Options: problem, idea, tip |
-| max_requests | Integer | Maximum number of requests
-| observation_key | String | MD5-Hash of observed Area
+| max_requests| - | Integer | Maximum number of requests
+| observation_key| - | String | MD5-Hash of observed Area
 
 Sample Response:
 
@@ -417,8 +417,8 @@ Parameters:
 | Name | Required | Type |
 |:--|:-:|:-:|
 | api_key | X | String |
-| ids | | String |
-| with_districts | Boolean |
+| ids | - | String |
+| with_districts | - | Boolean |
 
 Sample Response:
 
@@ -443,12 +443,14 @@ Parameters:
 | Name | Required | Type |
 |:--|:-:|:-:|
 | api_key | X | String |
-| geometry | | String |
-| area_code | | String |
-| problems | | Boolean |
-| problem_service | | String |
-| ideas | | Boolean |
+| geometry | * | String |
+| area_code | * | String |
+| problems | - | Boolean |
+| problem_service | - | String |
+| ideas | - | Boolean |
 | idea_service | | String |
+
+*: Either geometry or area_code is required
 
 Sample Response:
 

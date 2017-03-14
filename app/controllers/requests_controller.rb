@@ -22,6 +22,7 @@ class RequestsController < ApplicationController
   #   keyword             optional - Filter: Meldungstyp (Problem|Idee|Tipp)
   #   max_requests        optional - Anzahl der neuesten Meldungen
   #   observation_key     optional - MD5-Hash der zugehörigen Beobachtungsfläche
+  #   with_photo          optional - Filter: Meldungen mit freigegebenen Fotos
   def index
     filter = {}
     filter[:ids] = params[:service_request_id] unless params[:service_request_id].blank?
@@ -40,6 +41,7 @@ class RequestsController < ApplicationController
     if params[:lat] && params[:long] && params[:radius]
       filter[:restriction_area] = "CAST(ST_Buffer(CAST(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326) AS geography), #{ params[:radius] }) AS geometry)"
     end
+    filter[:with_foto] = params[:with_picture].to_boolean unless params[:with_picture].blank?
 
     @requests = KSBackend.requests(params[:api_key] ? backend_params(filter) : filter)
     respond_with @requests, root: :service_requests, dasherize: false,

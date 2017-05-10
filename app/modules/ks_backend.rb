@@ -2,7 +2,8 @@ module KSBackend
   require 'net/http'
 
   def self.requests(parameter = nil, response_class = RequestTimes)
-    self.check_versions self.get("vorgaenge", { just_times: true }.merge(parameter), RequestTimes), parameter
+    vorgaenge = self.get("vorgaenge", { just_times: true }.merge(parameter), RequestTimes)
+    parameter[:just_count].blank? ? self.check_versions(vorgaenge, parameter) : vorgaenge
   end
 
   def self.request(id, parameter = {})

@@ -447,8 +447,10 @@ Parameters:
 | area_code | * | String |
 | problems | - | Boolean |
 | problem_service | - | String |
+| problem_service_sub | - | String |
 | ideas | - | Boolean |
 | idea_service | | String |
+| idea_service_sub | | String |
 
 *: Either geometry or area_code is required
 

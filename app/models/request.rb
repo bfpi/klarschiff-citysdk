@@ -198,7 +198,7 @@ class Request
 
   private
   def image(size)
-    return nil if self.send(size).blank?
+    return nil if self.send(size).blank? || fotoFreigabeStatus.eql?(Status::DELETED)
 
     if fotoFreigabeStatus.eql?(Status::NON_PUBLIC)
       "#{ $request.protocol }#{ $request.host_with_port }#{

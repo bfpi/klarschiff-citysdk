@@ -8,6 +8,8 @@ class Status
               'closed' => ['geloest', 'nichtLoesbar'] }
 
   NON_PUBLIC = "intern"
+  
+  DELETED = "geloescht"
 
   def initialize(status)
     @city_sdk = CITY_SDK.detect { |_k, v| v == status }.first

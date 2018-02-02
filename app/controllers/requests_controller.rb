@@ -42,6 +42,7 @@ class RequestsController < ApplicationController
     filter[:geoRssHash] = params[:observation_key] unless params[:observation_key].blank?
     filter[:also_archived] = params[:also_archived] unless params[:also_archived].blank?
     filter[:just_count] = params[:just_count] unless params[:just_count].blank?
+    filter[:area_code] = params[:area_code] unless params[:area_code].blank?
     if params[:lat] && params[:long] && params[:radius]
       filter[:restriction_area] = "CAST(ST_Buffer(CAST(ST_SetSRID(ST_MakePoint(#{ params[:lat] }, #{ params[:long] }), 4326) AS geography), #{ params[:radius] }) AS geometry)"
     end

@@ -77,6 +77,7 @@ Parameters:
 | keyword | - | String | Options: problem, idea, tip |
 | max_requests| - | Integer | Maximum number of requests
 | observation_key| - | String | MD5-Hash of observed Area
+| area_code| - | Integer | Area-ID
 
 Sample Response:
 

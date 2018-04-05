@@ -50,6 +50,10 @@ module KSBackend
     self.post "missbrauchsmeldung", parameter, Abuse, true
   end
 
+  def self.create_photo(parameter)
+    self.post "foto", parameter, Photo, true
+  end
+
   def self.position_valid?(pos = {})
     return false if pos[:lat].blank? || pos[:long].blank?
     uri = URI("#{ KS_BACKEND_SERVICE_URL }position")

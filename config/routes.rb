@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     get   'comments/:service_request_id' => 'comments#index'
     post  'comments/:service_request_id' => 'comments#create', as: :comments
 
+    post  'photos/:service_request_id'   => 'photos#create', as: :photos
+
     get   'notes/:service_request_id'    => 'notes#index'
     post  'notes/:service_request_id'    => 'notes#create', as: :notes
 

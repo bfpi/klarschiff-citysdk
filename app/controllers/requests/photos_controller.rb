@@ -3,7 +3,7 @@ class Requests::PhotosController < ApplicationController
   # Foto hinzufügen
   # params:
   #   service_request_id  pflicht  - Vorgang-ID
-  #   author              pflicht  - Autor-Email
+  #   email               pflicht  - Autor-Email
   def create
     photo = Photo.new
     photo.assign_attributes(params)

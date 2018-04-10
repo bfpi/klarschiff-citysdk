@@ -3,7 +3,7 @@ class Photo
   include CitySDKSerialization
   include SetMedia
 
-  attr_accessor :id, :email
+  attr_accessor :id, :author
 
   self.serialization_attributes = [:id]
 
@@ -16,7 +16,7 @@ class Photo
   def to_backend_create_params
     {
         vorgang: id,
-        email: email,
+        email: author,
         bild: media,
         resultObjectOnSubmit: true
     }

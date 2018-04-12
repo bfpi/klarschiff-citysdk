@@ -34,9 +34,9 @@ HTTP Method: GET
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| service_id | X | Integer |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_id | X | Integer | |
 
 Sample Response:
 
@@ -58,7 +58,7 @@ HTTP Method: GET
 
 Parameters:
 
-| Name  | Required  | Type  | Notes  |
+| Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | api_key | - | String | API-Key |
 | service_request_id | - | Integer | List of multiple Request-IDs, comma delimited |
@@ -75,6 +75,9 @@ Parameters:
 | long | - | Double | restriction area (lat, long and radius required)
 | radius | - | Double | meter - restriction area (lat, long and radius required)
 | keyword | - | String | Options: problem, idea, tip |
+| with_foto| - | Boolean | Filter: Meldungen mit freigegebenen Fotos
+| also_archived| - | Boolean | Filter: Auch Archivierte Meldungen berücksichtigen
+| just_count| - | Boolean | es soll nur die Anzahl der Meldungen zurückgegeben werden
 | max_requests| - | Integer | Maximum number of requests
 | observation_key| - | String | MD5-Hash of observed Area
 | area_code| - | Integer | Area-ID
@@ -112,11 +115,11 @@ HTTP Method: GET
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| service_request_id | X | Integer |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
 | api_key | - | String | API-Key |
-| extensions | - | Boolean |
+| extensions | - | Boolean | |
 
 Sample Response:
 
@@ -160,7 +163,7 @@ HTTP Method: POST
 
 Parameters:
 
-| Name  | Required  | Type  | Notes  |
+| Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | api_key | X | String | API-Key |
 | email | X | String | Author-Email |
@@ -189,7 +192,7 @@ HTTP Method: PUT / PATCH
 
 Parameters:
 
-| Name  | Required  | Type  | Notes  |
+| Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | api_key | X | String | API-Key |
 | email | X | String | Author-Email |
@@ -240,7 +243,7 @@ HTTP Method: GET
 
 Parameters:
 
-| Name  | Required  | Type  | Notes  |
+| Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | service_request_id | X | Integer | |
 | api_key | X | String | |
@@ -266,12 +269,12 @@ HTTP Method: POST
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| service_request_id | X | Integer |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
 | api_key | X | String | |
-| author | X | String |
-| comment | X | String |
+| author | X | String | |
+| comment | X | String | |
 
 Sample Response:
 
@@ -294,10 +297,10 @@ HTTP Method: GET
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| service_request_id | X | Integer |
-| api_key | X | String |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
+| api_key | X | String | |
 
 Sample Response:
 
@@ -320,12 +323,12 @@ HTTP Method: POST
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| service_request_id | X | Integer |
-| api_key | X | String |
-| author | X | String |
-| comment | X | String |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
+| api_key | X | String | |
+| author | X | String | |
+| comment | X | String | |
 
 Sample Response:
 
@@ -349,11 +352,11 @@ HTTP Method: POST
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| service_request_id | X | Integer |
-| author | X | String |
-| comment | X | String |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
+| author | X | String | |
+| comment | X | String | |
 
 Sample Response:
 
@@ -372,10 +375,10 @@ HTTP Method: POST
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| service_request_id | X | Integer |
-| author | X | String |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
+| author | X | String | Author-Email
 
 Sample Response:
 
@@ -387,6 +390,29 @@ Sample Response:
 </votes>
 ```
 
+### Create new Photo for Service Request
+<code>http://[API endpoint]/requests/photos/[service_request_id].[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| service_request_id | X | Integer | |
+| author | X | String | Author-Email
+| media | X | String | Photo (Base64-Encoded-String)
+
+Sample Response:
+
+```xml
+<photos>
+  <photo>
+    <id>photo.id</id>
+  </photo>
+</photos>
+```
+
 ### Get Position Coverage
 <code>http://[API endpoint]/coverage.[format]</code>
 
@@ -394,9 +420,9 @@ HTTP Method: GET
 
 Parameters:
 
-| Name  | Required  | Type  |
-|:--|:-:|:-:|
-| api_key | X | String |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | |
 | lat | X | Float | latitude value |
 | long | X | Float | longitude value |
 
@@ -415,11 +441,11 @@ HTTP Method: GET
 
 Parameters:
 
-| Name | Required | Type |
-|:--|:-:|:-:|
-| api_key | X | String |
-| ids | - | String |
-| with_districts | - | Boolean |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | |
+| ids | - | String | |
+| with_districts | - | Boolean | |
 
 Sample Response:
 
@@ -441,17 +467,17 @@ HTTP Method: POST
 
 Parameters:
 
-| Name | Required | Type |
-|:--|:-:|:-:|
-| api_key | X | String |
-| geometry | * | String |
-| area_code | * | String |
-| problems | - | Boolean |
-| problem_service | - | String |
-| problem_service_sub | - | String |
-| ideas | - | Boolean |
-| idea_service | | String |
-| idea_service_sub | | String |
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | |
+| geometry | * | String | |
+| area_code | * | String | |
+| problems | - | Boolean | |
+| problem_service | - | String | |
+| problem_service_sub | - | String | |
+| ideas | - | Boolean | |
+| idea_service | | String | |
+| idea_service_sub | | String | |
 
 *: Either geometry or area_code is required
 
@@ -492,13 +518,13 @@ Sample Response:
   - Gegebenenfalls muss das entsprechende Ruby installiert werden:
   
     ```bash
-    rvm install ruby-2.2.2
+    rvm install ruby-2.3.2
     ```
   - Ein erneuter Wechsel in das Verzeichnis legt anschließend die notwendigen Wrapper und das Gemset an
   
     ```bash
-    ruby-2.2.2 - #gemset created /usr/local/rvm/gems/ruby-2.2.2@klarschiff-citysdk_r01
-    ruby-2.2.2 - #generating klarschiff-citysdk_r01 wrappers................
+    ruby-2.3.2 - #gemset created /usr/local/rvm/gems/ruby-2.3.2@klarschiff-citysdk_r01
+    ruby-2.3.2 - #generating klarschiff-citysdk_r01 wrappers................
     ```
   - Falls ```bundler``` nicht (mehr) als Default-Gem durch RVM installiert wird, kann dies wie folgt nachgeholt werden:
   
@@ -516,24 +542,28 @@ Sample Response:
     ```bash
     rake assets:precompile
     ```
-    
-- Konfiguration der Applikation (Anpassung an die entsprechende Umgebung)
-  - Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sample.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
-  - Konfigurationen in der `config/settings.yml`
-    - Interne Vorgabewerte werden als Konstanten in dem Block `constants` konfiguriert.
-    - Weitere Blöcke sind bisher nicht implementiert.
-  - Konfigurationen in der `config/clients.yml`
-    In dieser Datei erfolgt die Berechtigungsdefinition für die zu unterstützenden API-Clients.
-    - Jeder neue Client wird mit einem eigenene API-Key als Schlüssel in dieser Datei eingefügt.
-    - Unterhalb dieses Schlüssels können folgende Werte konfiguriert werden:
-      - `name`, ist optional, soll aber für die Verständlichkeit einen Bezeichner des API-Clients tragen können (z.B. Prüf- und Protokoll-Client).
-      - `backend_auth_code`, konfiguriert den Authorisierungsschlüssel für die erweiterte Kommunikation mit dem Backend. Dieser muss mit dem Property-Wert `auth.kod_code` in der `settings.properties` im Backend der jeweiligen Zielumgebung übereinstimmen.
-      - `permissions`, definiert die für diesen Client erlaubten Berechtigungen. Die Definition erfolgt als YAML-Array, also ein Eintrag pro Zeile. Die Werte werden als Ruby-Symbol geschrieben. Beispiel:
-    
-        ```yml
-        permissions:
-          - :create_comments
-          - :create_notes
-        ```
-  - Secrets (`config/secrets.yml`) zur Verschlüsselung der internen Nutzerdaten (Cookies, usw.)
+
+## Konfiguration der Applikation (Anpassung an die entsprechende Umgebung)
+Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sample.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
+
+### Konfigurationen in der `config/settings.yml`
+  - Interne Vorgabewerte werden als Konstanten in dem Block `constants` konfiguriert.
+  - Weitere Blöcke sind bisher nicht implementiert.
+
+### Konfigurationen in der `config/clients.yml`
+  In dieser Datei erfolgt die Berechtigungsdefinition für die zu unterstützenden API-Clients.
+  - Jeder neue Client wird mit einem eigenene API-Key als Schlüssel in dieser Datei eingefügt.
+  - Unterhalb dieses Schlüssels können folgende Werte konfiguriert werden:
+    - `name`, ist optional, soll aber für die Verständlichkeit einen Bezeichner des API-Clients tragen können (z.B. Prüf- und Protokoll-Client).
+    - `backend_auth_code`, konfiguriert den Authorisierungsschlüssel für die erweiterte Kommunikation mit dem Backend. Dieser muss mit dem Property-Wert `auth.kod_code` in der `settings.properties` im Backend der jeweiligen Zielumgebung übereinstimmen.
+    - `permissions`, definiert die für diesen Client erlaubten Berechtigungen. Die Definition erfolgt als YAML-Array, also ein Eintrag pro Zeile. Die Werte werden als Ruby-Symbol geschrieben. Beispiel:
+
+      ```yml
+      permissions:
+        - :create_comments
+        - :create_notes
+      ```
+
+### Konfigurationen in der `config/secrets.yml`
+- Die Datei dient der Verschlüsselung der internen Nutzerdaten (Cookies, usw.)
     - Die Konfiguration erfolgt hier nach Rails-Konvention pro Umgebung. Es muss aber nur die Variante mit der entsprechenden Umgebung konfiguriert werden. Also `production` in der Produktivumgebung und der Demo-Umgebung. Die RAILS_ENV `test` ist für automatisierte Tests im Framework vorbehalten.

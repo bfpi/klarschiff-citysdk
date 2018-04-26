@@ -75,12 +75,12 @@ Parameters:
 | long | - | Double | restriction area (lat, long and radius required)
 | radius | - | Double | meter - restriction area (lat, long and radius required)
 | keyword | - | String | Options: problem, idea, tip |
-| with_foto| - | Boolean | Filter: Meldungen mit freigegebenen Fotos
-| also_archived| - | Boolean | Filter: Auch Archivierte Meldungen berücksichtigen
-| just_count| - | Boolean | es soll nur die Anzahl der Meldungen zurückgegeben werden
-| max_requests| - | Integer | Maximum number of requests
-| observation_key| - | String | MD5-Hash of observed Area
-| area_code| - | Integer | Area-ID
+| with_foto | - | Boolean | Filter: Meldungen mit freigegebenen Fotos
+| also_archived | - | Boolean | Filter: Auch archivierte Meldungen berücksichtigen
+| just_count | - | Boolean | Es soll nur die Anzahl der Meldungen zurückgegeben werden
+| max_requests | - | Integer | Maximum number of requests
+| observation_key | - | String | MD5-Hash of observed Area
+| area_code | - | Integer | Area-ID
 
 Sample Response:
 
@@ -544,14 +544,14 @@ Sample Response:
     ```
 
 ## Konfiguration der Applikation (Anpassung an die entsprechende Umgebung)
-Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sample.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `yxz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
+Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare Vorlagen mit dem Namen `xyz.sample.yml`. Diese müssen kopiert und entsprechend ohne das `sample` als `xyz.yml` benannt werden. Die für die Umgebung gültigen Werte werden dann in der `xyz.yml` konfiguriert.
 
 ### Konfigurationen in der `config/settings.yml`
   - Interne Vorgabewerte werden als Konstanten in dem Block `constants` konfiguriert.
   - Weitere Blöcke sind bisher nicht implementiert.
 
 ### Konfigurationen in der `config/clients.yml`
-  In dieser Datei erfolgt die Berechtigungsdefinition für die zu unterstützenden API-Clients.
+In dieser Datei erfolgt die Berechtigungsdefinition für die zu unterstützenden API-Clients.
   - Jeder neue Client wird mit einem eigenene API-Key als Schlüssel in dieser Datei eingefügt.
   - Unterhalb dieses Schlüssels können folgende Werte konfiguriert werden:
     - `name`, ist optional, soll aber für die Verständlichkeit einen Bezeichner des API-Clients tragen können (z.B. Prüf- und Protokoll-Client).
@@ -565,5 +565,5 @@ Für die Konfigurationsdateien mit vertraulichem Inhalt gibt es versionierbare V
       ```
 
 ### Konfigurationen in der `config/secrets.yml`
-- Die Datei dient der Verschlüsselung der internen Nutzerdaten (Cookies, usw.)
-    - Die Konfiguration erfolgt hier nach Rails-Konvention pro Umgebung. Es muss aber nur die Variante mit der entsprechenden Umgebung konfiguriert werden. Also `production` in der Produktivumgebung und der Demo-Umgebung. Die RAILS_ENV `test` ist für automatisierte Tests im Framework vorbehalten.
+Die Datei dient der Konfiguration zur Verschlüsselung der internen Nutzerdaten (Cookies, usw.).
+  - Die Konfiguration erfolgt hier nach Rails-Konvention pro Umgebung. Es muss aber nur die Variante mit der entsprechenden Umgebung konfiguriert werden. Also `production` in der Produktivumgebung und der Demo-Umgebung. Die RAILS_ENV `test` ist für automatisierte Tests im Framework vorbehalten.

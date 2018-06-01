@@ -11,6 +11,12 @@ JSON, XML
 
 HTTP Method: GET
 
+Parameters:
+
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| api_key | - | String | API-Key |
+
 Sample Response:
 
 ```xml
@@ -36,6 +42,7 @@ Parameters:
 
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
+| api_key | - | String | API-Key |
 | service_id | X | Integer | |
 
 Sample Response:

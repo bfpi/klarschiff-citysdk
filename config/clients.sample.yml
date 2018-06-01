@@ -14,8 +14,11 @@
   name: <Client-Name>
   backend_auth_code: <auth.kod_code>
   permissions:
-    - :read_comment_author
+    - :create_comments
     - :create_notes
+    - :create_request
+    - :d3_document_url
+    - :read_comments
     - :read_notes
+    - :request_job_details
     - :update_request
-    - :job_details

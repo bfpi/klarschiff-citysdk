@@ -2,12 +2,13 @@
 # Mögliche Permissions:
 #
 #  create_comments      - Lob/Hinweis/Kritik - lesen /requests/comments/create
-#  read_comments        - Lob/Hinweis/Kritik - lesen /requests/comments/index
 #  create_notes         - interne Kommentare anlegen /requests/notes/create
-#  read_notes           - interne Kommentare lesen /requests/notes/index
 #  create_request       - Vorgang anlegen /requests/create
-#  update_request       - Vorgang bearbeiten /requests/update
+#  d3_document_url      - Kategorie-Daten (D.3-Akten-Formular)
+#  read_comments        - Lob/Hinweis/Kritik - lesen /requests/comments/index
+#  read_notes           - interne Kommentare lesen /requests/notes/index
 #  request_job_details  - Auftrags-Daten (Auftrag-Status, Priorität, Delegation)
+#  update_request       - Vorgang bearbeiten /requests/update
 #
 
 <API-Key>:

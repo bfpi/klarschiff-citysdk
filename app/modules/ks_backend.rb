@@ -121,11 +121,13 @@ module KSBackend
       end 
     end
 
-    p = { ids: reload_ids }
-    p[:authCode] = parameter[:authCode] unless parameter[:authCode].blank? if parameter
-    self.get("vorgaenge", p, Request).each do |request|
-      Rails.cache.write(request.id, request)
-      return_list << request
+    reload_ids.in_groups_of(200, false).each do |ids_group|
+      param = { ids: ids_group }
+      param[:authCode] = parameter[:authCode] unless parameter[:authCode].blank? if parameter
+      self.get("vorgaenge", param, Request).each do |request|
+        Rails.cache.write(request.id, request)
+        return_list << request
+      end unless ids_group.blank?
     end unless reload_ids.blank?
     return_list
   end

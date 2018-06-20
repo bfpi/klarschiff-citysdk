@@ -2,6 +2,7 @@ class Request
   include ActiveModel::AttributeMethods
   include DateFormatter
   include CitySDKSerialization
+  include SetMedia
   include ValidationErrorFormatter
 
   validates :service_code, presence: true
@@ -12,7 +13,7 @@ class Request
 
   attr_accessor :id, :version, :datum, :typ, :adresse, :statusKommentar, :kategorie, :beschreibung, :zustaendigkeitFrontend,
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
-                :zipcode, :lat, :long, :email, :trust, :unterstuetzerCount, :fotowunsch, :media,
+                :zipcode, :lat, :long, :email, :trust, :unterstuetzerCount, :fotowunsch,
                 :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn,
                 :beschreibungFreigabeStatus, :fotoFreigabeStatus
 
@@ -136,19 +137,6 @@ class Request
       when "NOT_CHECKABLE"
         "nicht_abarbeitbar"
     end
-  end
-
-  def media=(value)
-    img = if value.respond_to? :path
-      Magick::Image::read(value.path)
-    else
-      Magick::Image::read_inline(value)
-    end.first
-    img.format = "JPEG" unless img.format == "JPEG"
-    if img.columns > IMAGE_MAX_WIDTH || img.rows > IMAGE_MAX_HEIGHT
-      img.change_geometry!("#{ IMAGE_MAX_WIDTH }x#{ IMAGE_MAX_HEIGHT }") { |cols, rows, image| image.resize!(cols, rows) }
-    end
-    @media = Base64.encode64(img.to_blob)
   end
 
   def attribute=(attributes)

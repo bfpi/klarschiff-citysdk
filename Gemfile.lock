@@ -46,7 +46,7 @@ GEM
     builder (3.2.3)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
-    dalli (2.7.8)
+    dalli (2.7.9)
     erubi (1.7.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)

@@ -15,3 +15,4 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 gem 'dalli'
+gem 'activemodel-serializers-xml'

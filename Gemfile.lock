@@ -29,6 +29,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (5.2.1)
       activesupport (= 5.2.1)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (5.2.1)
       activemodel (= 5.2.1)
       activesupport (= 5.2.1)
@@ -127,6 +131,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemodel-serializers-xml
   dalli
   jbuilder (~> 2.5)
   oj

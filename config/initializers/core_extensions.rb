@@ -9,7 +9,7 @@ module CoreExtensions
     end
   end
 
-  class ::Fixnum
+  class ::Integer
     def is_i?
       true
     end

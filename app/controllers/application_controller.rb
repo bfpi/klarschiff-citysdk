@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include ParameterValidation
   respond_to :xml, :json
 
-  before_filter do
+  before_action do
     check_auth
     $request = request
   end

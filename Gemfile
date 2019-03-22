@@ -9,7 +9,7 @@ gem 'responders'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-gem 'rmagick'
+gem 'mini_magick'
 
 gem 'oj'
 gem 'oj_mimic_json'

@@ -7,13 +7,13 @@ module SetMedia
     def media=(value)
       return if value.blank?
       img = if value.respond_to? :path
-        Magick::Image::read(value.path)
+        MiniMagick::Image.open(value.path)
       else
-        Magick::Image::read_inline(value)
-      end.first
-      img.format = "JPEG" unless img.format == "JPEG"
-      if img.columns > IMAGE_MAX_WIDTH || img.rows > IMAGE_MAX_HEIGHT
-        img.change_geometry!("#{ IMAGE_MAX_WIDTH }x#{ IMAGE_MAX_HEIGHT }") { |cols, rows, image| image.resize!(cols, rows) }
+        MiniMagick::Image.read(Base64.decode64(value))
+      end
+      img.format('JPEG') unless img.type == 'JPEG'
+      if img.width > IMAGE_MAX_WIDTH || img.height > IMAGE_MAX_HEIGHT
+        img.resize "#{ IMAGE_MAX_WIDTH }x#{ IMAGE_MAX_HEIGHT }"
       end
       @media = Base64.encode64(img.to_blob)
     end

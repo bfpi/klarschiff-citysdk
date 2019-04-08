@@ -15,7 +15,7 @@ class Request
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
                 :zipcode, :lat, :long, :email, :trust, :unterstuetzerCount, :fotowunsch,
                 :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn,
-                :beschreibungFreigabeStatus, :fotoFreigabeStatus
+                :beschreibungFreigabeStatus, :fotoFreigabeStatus, :property_attributes, :flurstueckseigentum
 
   self.serialization_attributes = [:service_request_id]
 
@@ -36,6 +36,7 @@ class Request
   alias_attribute :detailed_status_datetime, :statusDatum
   alias_attribute :job_priority, :auftragPrioritaet
   alias_attribute :delegation, :delegiertAn
+  alias_attribute :property_owner, :flurstueckseigentum
 
   def self.city_sdk_keywords_for_backend(keywords)
     CITY_SDK_KEYWORDS.slice(*Array(keywords)).values.flatten
@@ -139,6 +140,10 @@ class Request
     end
   end
 
+  def property_owner=(value)
+    @flurstueckseigentum = value
+  end
+
   def attribute=(attributes)
     assign_attributes(attributes)
   end
@@ -147,6 +152,7 @@ class Request
     ea = { detailed_status: detailed_status, detailed_status_datetime: format_date(detailed_status_datetime),
            description_public: !beschreibungFreigabeStatus.eql?(Status::NON_PUBLIC),
            media_urls: images, photo_required: photo_required, trust: trust, votes: votes }
+    ea.merge!({ property_owner: property_owner }) if @property_attributes
     ea.merge!({ delegation: delegation, job_status: job_status, job_priority: job_priority }) if @job_detail_attributes
     ea
   end
@@ -205,6 +211,7 @@ class Request
   end
 
   def serializable_methods(options)
+    @property_attributes = options[:property_details]
     @job_detail_attributes = options[:job_details]
 
     ret = []

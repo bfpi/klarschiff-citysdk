@@ -50,7 +50,7 @@ class RequestsController < ApplicationController
 
     @requests = KSBackend.requests(params[:api_key] ? backend_params(filter) : filter)
     respond_with @requests, root: :service_requests, dasherize: false,
-      extensions: params[:extensions].try(:to_boolean), job_details: has_permission?(:request_job_details)
+      extensions: params[:extensions].try(:to_boolean), property_details: has_permission?(:request_property_details), job_details: has_permission?(:request_job_details)
   end
 
   # Einzelner Vorgang nach ID
@@ -62,6 +62,7 @@ class RequestsController < ApplicationController
     @request = KSBackend.request(params[:service_request_id], params[:api_key] ? backend_params({}) : {})
     respond_with @request, root: :service_requests, dasherize: false,
       extensions: params[:extensions].try(:to_boolean),
+      property_details: has_permission?(:request_property_details),
       job_details: has_permission?(:request_job_details)
   end
 

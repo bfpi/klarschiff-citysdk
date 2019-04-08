@@ -1,14 +1,15 @@
 #
 # Mögliche Permissions:
 #
-#  create_comments      - Lob/Hinweis/Kritik - lesen /requests/comments/create
-#  create_notes         - interne Kommentare anlegen /requests/notes/create
-#  create_request       - Vorgang anlegen /requests/create
-#  d3_document_url      - Kategorie-Daten (D.3-Akten-Formular)
-#  read_comments        - Lob/Hinweis/Kritik - lesen /requests/comments/index
-#  read_notes           - interne Kommentare lesen /requests/notes/index
-#  request_job_details  - Auftrags-Daten (Auftrag-Status, Priorität, Delegation)
-#  update_request       - Vorgang bearbeiten /requests/update
+#  create_comments          - Lob/Hinweis/Kritik - lesen /requests/comments/create
+#  create_notes             - interne Kommentare anlegen /requests/notes/create
+#  create_request           - Vorgang anlegen /requests/create
+#  d3_document_url          - Kategorie-Daten (D.3-Akten-Formular)
+#  read_comments            - Lob/Hinweis/Kritik - lesen /requests/comments/index
+#  read_notes               - interne Kommentare lesen /requests/notes/index
+#  request_property_details - Angaben zum Flurstückseigentum
+#  request_job_details      - Auftrags-Daten (Auftrag-Status, Priorität, Delegation)
+#  update_request           - Vorgang bearbeiten /requests/update
 #
 
 <API-Key>:
@@ -21,5 +22,6 @@
     - :d3_document_url
     - :read_comments
     - :read_notes
+    - :request_property_details
     - :request_job_details
     - :update_request

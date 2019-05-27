@@ -9,23 +9,19 @@ class Discovery
   alias_attribute :service_name, :name
 
   def changeset
-    '2015-11-05 08:43'
+    DISCOVERY_CHANGESET
   end
 
   def contact
-    'Hanse- und Universitätsstadt Rostock, Kataster-, Vermessungs- und Liegenschaftsamt, Holbeinplatz 14, 18069 Rostock, Telefon: +49 381 381-6281, Telefax: +49 381 381-6902, E-Mail: klarschiff.hro@rostock.de'
+    DISCOVERY_CONTACT
   end
 
   def key_service
-    'klarschiff.hro@rostock.de'
+    DISCOVERY_KEY_SERVICE
   end
 
   def endpoints
-    [
-        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'https://geo.sv.rostock.de/citysdk', changeset: changeset, type: 'production', formats: ['application/json', 'text/xml'] },
-        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'https://support.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] },
-        { specification: 'http://wiki.open311.org/GeoReport_v2', url: 'https://demo.klarschiff-hro.de/citysdk', changeset: changeset, type: 'test', formats: ['application/json', 'text/xml'] }
-    ]
+    DISCOVERY_ENDPOINTS
   end
 
   private

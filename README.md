@@ -1,3 +1,4 @@
+
 ## Klarschiff-CitySDK
 Implementation of CitySDK-Smart-Participation-API for Klarschiff
 
@@ -253,7 +254,7 @@ Parameters:
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | service_request_id | X | Integer | |
-| api_key | X | String | |
+| api_key | X | String | API-Key |
 
 Sample Response:
 
@@ -279,7 +280,7 @@ Parameters:
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | service_request_id | X | Integer | |
-| api_key | X | String | |
+| api_key | X | String | API-Key |
 | author | X | String | |
 | comment | X | String | |
 
@@ -307,7 +308,7 @@ Parameters:
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | service_request_id | X | Integer | |
-| api_key | X | String | |
+| api_key | X | String | API-Key |
 
 Sample Response:
 
@@ -333,7 +334,7 @@ Parameters:
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | service_request_id | X | Integer | |
-| api_key | X | String | |
+| api_key | X | String | API-Key |
 | author | X | String | |
 | comment | X | String | |
 
@@ -429,7 +430,7 @@ Parameters:
 
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
-| api_key | X | String | |
+| api_key | X | String | API-Key |
 | lat | X | Float | latitude value |
 | long | X | Float | longitude value |
 
@@ -450,7 +451,7 @@ Parameters:
 
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
-| api_key | X | String | |
+| api_key | X | String | API-Key |
 | ids | - | String | |
 | with_districts | - | Boolean | |
 
@@ -476,7 +477,7 @@ Parameters:
 
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
-| api_key | X | String | |
+| api_key | X | String | API-Key |
 | geometry | * | String | |
 | area_code | * | String | |
 | problems | - | Boolean | |
@@ -494,6 +495,89 @@ Sample Response:
 <observation>
   <rss-id>39a855f0a4924af3217a217c8dc78ece</rss-id>
 </observatio>
+```
+
+### Get Jobs
+<code>http://[API endpoint]/jobs.[format]</code>
+
+HTTP Method: GET
+
+Parameters:
+
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | API-Key |
+| date | X | Date | Jobs that are the equal or lower than the given date |
+| status | - | String | Status (CHECKED, UNCHECKED, NOT_CHECKABLE) |
+
+Sample Response:
+
+```xml
+<jobs>
+  <job>
+    <id>job.id</id>
+    <service-request-id>job.service_request_id</service-request-id>
+    <date>job.date</date>
+    <agency-responsible>job.agency_responsible</agency-responsible>
+    <status>job.status</status>
+  </job>
+  ...
+</jobs>
+```
+
+### Create new Job
+<code>http://[API endpoint]/jobs.[format]</code>
+
+HTTP Method: POST
+
+Parameters:
+
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | API-Key |
+| service_request_id | X | Integer | |
+| agency_responsible | X | String | |
+| date | X | Date | |
+
+Sample Response:
+
+```xml
+<jobs>
+  <job>
+    <id>job.id</id>
+    <service-request-id>job.service_request_id</service-request-id>
+    <date>job.date</date>
+    <agency-responsible>job.agency_responsible</agency-responsible>
+    <status>job.status</status>
+  </job>
+</jobs>
+```
+
+### Update Job
+<code>http://[API endpoint]/jobs/[service_request_id].[format]</code>
+
+HTTP Method: PUT / PATCH
+
+Parameters:
+
+| Name | Required | Type | Notes |
+|:--|:-:|:-:|:-:|
+| api_key | X | String | API-Key |
+| status | X | String | Status (CHECKED, UNCHECKED, NOT_CHECKABLE) |
+| date | X | Date | |
+
+Sample Response:
+
+```xml
+<jobs>
+  <job>
+    <id>job.id</id>
+    <service-request-id>job.service_request_id</service-request-id>
+    <date>job.date</date>
+    <agency-responsible>job.agency_responsible</agency-responsible>
+    <status>job.status</status>
+  </job>
+</jobs>
 ```
 
 ## Installation
@@ -574,3 +658,4 @@ In dieser Datei erfolgt die Berechtigungsdefinition für die zu unterstützenden
 ### Konfigurationen in der `config/secrets.yml`
 Die Datei dient der Konfiguration zur Verschlüsselung der internen Nutzerdaten (Cookies, usw.).
   - Die Konfiguration erfolgt hier nach Rails-Konvention pro Umgebung. Es muss aber nur die Variante mit der entsprechenden Umgebung konfiguriert werden. Also `production` in der Produktivumgebung und der Demo-Umgebung. Die RAILS_ENV `test` ist für automatisierte Tests im Framework vorbehalten.
+

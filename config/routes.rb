@@ -6,6 +6,11 @@ Rails.application.routes.draw do
 
   get     'coverage'                     => 'coverage#valid'
 
+  get     'jobs'                         => 'jobs#index'
+  post    'jobs'                         => 'jobs#create'
+  put     'jobs/:service_request_id'     => 'jobs#update'
+  patch   'jobs/:service_request_id'     => 'jobs#update'
+
   get     'services'                     => 'services#index'
   get     'services/:service_id'         => 'services#show'
 

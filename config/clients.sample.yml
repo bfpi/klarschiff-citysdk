@@ -10,6 +10,7 @@
 #  request_property_details - Angaben zum Flurstückseigentum
 #  request_job_details      - Auftrags-Daten (Auftrag-Status, Priorität, Delegation)
 #  update_request           - Vorgang bearbeiten /requests/update
+#  update_job               - Aufträge auflisten/anlegen/bearbeiten /jobs/[index,create,update]
 #
 
 <API-Key>:
@@ -25,3 +26,4 @@
     - :request_property_details
     - :request_job_details
     - :update_request
+    - :update_job

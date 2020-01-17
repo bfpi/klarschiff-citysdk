@@ -20,6 +20,9 @@ module Authorization
         when "requests"
           check_action_permission(:create_request) if action_name == "create"
           check_action_permission(:update_request) if action_name == "update"
+
+        when "jobs"
+          check_action_permission(:update_job)
       end
     end
   end

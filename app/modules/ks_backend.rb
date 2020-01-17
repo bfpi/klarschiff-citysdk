@@ -69,6 +69,18 @@ module KSBackend
     self.post 'geoRss', parameter, Observation, true
   end
 
+  def self.jobs(parameter)
+    self.get "auftraege", parameter, Job, false
+  end
+
+  def self.create_job(parameter)
+    self.post "auftragAnlegen", parameter, Job, true
+  end
+
+  def self.update_job(parameter)
+    self.post "auftragAktualisieren", parameter, Job, true
+  end
+
   private
   def self.get(be_method, parameter, response_class, only_one = false)
     uri = URI("#{ KS_BACKEND_SERVICE_URL }#{ be_method }")
@@ -98,6 +110,9 @@ module KSBackend
     end
 
     result = response.body.force_encoding('UTF-8')
+
+puts "RESULT: #{ result.inspect }"
+
     begin
       return response_class.new(JSON.parse(result)) if only_one
       JSON.parse(result).map do |elem|

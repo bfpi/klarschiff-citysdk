@@ -110,9 +110,6 @@ module KSBackend
     end
 
     result = response.body.force_encoding('UTF-8')
-
-puts "RESULT: #{ result.inspect }"
-
     begin
       return response_class.new(JSON.parse(result)) if only_one
       JSON.parse(result).map do |elem|

@@ -8,7 +8,7 @@ class JobsController < ApplicationController
   #   status              optional - Status
   def index
     filter = {}
-    filter[:date] = (params[:date].to_time.to_i * 1000)
+    filter[:date] = (params[:date].to_time.to_i * 1000) unless params[:date].blank?
     filter[:status] = status(params[:status]) unless params[:status].blank?
 
     @jobs = KSBackend.jobs(params[:api_key] ? backend_params(filter) : filter)
@@ -27,7 +27,6 @@ class JobsController < ApplicationController
 
     raise job.errors_messages unless job.valid?
 
-puts backend_params(job.to_backend_create_params).inspect
     obj = Array.wrap(KSBackend.create_job(backend_params(job.to_backend_create_params)))
     respond_with obj, root: :jobs, location: jobs_url, dasherize: false
   end

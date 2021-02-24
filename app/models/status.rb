@@ -1,19 +1,25 @@
 class Status
-  CITY_SDK = { 'PENDING' => 'gemeldet', 'RECEIVED' => 'offen', 'IN_PROCESS' => 'inBearbeitung',
-               'PROCESSED' => 'geloest', 'REJECTED' => 'nichtLoesbar' }
+  CITY_SDK = { 'PENDING' => defined?(STATUS_CITYSDK_PENDING) ? STATUS_CITYSDK_PENDING : 'gemeldet',
+               'RECEIVED' => defined?(STATUS_CITYSDK_RECEIVED) ? STATUS_CITYSDK_RECEIVED : 'offen',
+               'IN_PROCESS' => defined?(STATUS_CITYSDK_IN_PROCESS) ? STATUS_CITYSDK_IN_PROCESS : 'inBearbeitung',
+               'PROCESSED' => defined?(STATUS_CITYSDK_PROCESSED) ? STATUS_CITYSDK_PROCESSED : 'geloest',
+               'REJECTED' => defined?(STATUS_CITYSDK_REJECTED) ? STATUS_CITYSDK_REJECTED : 'nichtLoesbar' }
 
   PERMISSABLE_CITY_SDK_KEYS = %w(IN_PROCESS PROCESSED REJECTED)
 
-  OPEN311 = { 'open' => ['gemeldet', 'offen', 'inBearbeitung'],
-              'closed' => ['geloest', 'nichtLoesbar'] }
+  OPEN311 = { 'open' => (defined?(STATUS_OPEN311_OPEN) ? STATUS_OPEN311_OPEN : ['gemeldet', 'offen', 'inBearbeitung']),
+              'closed' => (defined?(STATUS_OPEN311_CLOSED) ? STATUS_OPEN311_CLOSED : ['geloest', 'nichtLoesbar'])
+            }
 
   NON_PUBLIC = "intern"
   
   DELETED = "geloescht"
 
   def initialize(status)
-    @city_sdk = CITY_SDK.detect { |_k, v| v == status }.first
-    @open311 = OPEN311.detect { |_k, v| v.include?(status) }.first
+    @city_sdk = CITY_SDK.detect { |_k, v|
+      v.split(',').select { |vv| vv == status }.first }
+    @open311 = OPEN311.detect { |_k, v|
+      v.split(',').select { |vv| vv == status }.first }
     @backend = status
   end
 

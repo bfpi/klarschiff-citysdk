@@ -136,6 +136,7 @@ module KSBackend
     reload_ids.in_groups_of(200, false).each do |ids_group|
       param = { ids: ids_group }
       param[:authCode] = parameter[:authCode] unless parameter[:authCode].blank? if parameter
+      param[:also_archived] = parameter[:also_archived] unless parameter[:also_archived].blank? if parameter
       self.get("vorgaenge", param, Request).each do |request|
         Rails.cache.write(request.id, request)
         return_list << request

@@ -49,9 +49,6 @@ class RequestsController < ApplicationController
     filter[:with_foto] = params[:with_picture].to_boolean unless params[:with_picture].blank?
 
     @requests = KSBackend.requests(params[:api_key] ? backend_params(filter) : filter)
-    p "=" * 90
-    p @requests.count
-    p "=" * 90
     respond_with @requests, root: :service_requests, dasherize: false,
       extensions: params[:extensions].try(:to_boolean), property_details: has_permission?(:request_property_details), job_details: has_permission?(:request_job_details)
   end

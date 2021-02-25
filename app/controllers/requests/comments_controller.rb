@@ -9,10 +9,11 @@ class Requests::CommentsController < ApplicationController
 
   # Lob/Hinweis/Kritik anlegen
   # params:
-  #   service_request_id  pflicht  - Vorgang-ID
-  #   api_key             pflicht  - API-Key
-  #   author              pflicht  - Autor-Email
-  #   comment             pflicht  - Kommentar
+  #   service_request_id        pflicht  - Vorgang-ID
+  #   api_key                   pflicht  - API-Key
+  #   author                    pflicht  - Autor-Email
+  #   comment                   pflicht  - Kommentar
+  #   privacy_policy_accepted   optional - Bestätigung Datenschutz
   def create
     comment = Comment.new
     comment.assign_attributes(params)

@@ -2,7 +2,7 @@ class Comment
   include DateFormatter
   include CitySDKSerialization
 
-  attr_accessor :id, :freitext, :datum, :vorgang, :autorEmail, :empfaengerEmail
+  attr_accessor :id, :freitext, :datum, :vorgang, :autorEmail, :empfaengerEmail, :privacy_policy_accepted
 
   self.serialization_attributes = [:id, :jurisdiction_id, :comment, :datetime, :service_request_id, :author]
 
@@ -23,6 +23,7 @@ class Comment
         vorgang: id,
         email: author,
         freitext: freitext,
+        datenschutz: privacy_policy_accepted
     }
   end
 end

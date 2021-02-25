@@ -68,19 +68,20 @@ class RequestsController < ApplicationController
 
   # Neuen Vorgang anlegen
   # params:
-  #   api_key             pflicht - API-Key
-  #   service_code        pflicht - Kategorie
-  #   email               pflicht - Autor-Email
-  #   description         pflicht - Beschreibung
-  #   lat                 optional - Latitude & Longitude ODER Address-String
-  #   long                optional - Latitude & Longitude ODER Address-String
-  #   address_string      optional - Latitude & Longitude ODER Address-String
-  #   photo_required      optional - Fotowunsch
-  #   media               optional - Foto (Base64-Encoded-String)
+  #   api_key                   pflicht - API-Key
+  #   service_code              pflicht - Kategorie
+  #   email                     pflicht - Autor-Email
+  #   description               pflicht - Beschreibung
+  #   lat                       optional - Latitude & Longitude ODER Address-String
+  #   long                      optional - Latitude & Longitude ODER Address-String
+  #   address_string            optional - Latitude & Longitude ODER Address-String
+  #   photo_required            optional - Fotowunsch
+  #   media                     optional - Foto (Base64-Encoded-String)
+  #   privacy_policy_accepted   optional - Bestätigung Datenschutz
   def create
     request = Request.new
     request.assign_attributes params.slice(:email, :service_code, :description, :lat, :long,
-                                           :address_string, :photo_required, :media)
+                                           :address_string, :photo_required, :media, :privacy_policy_accepted)
 
     raise request.errors_messages unless request.valid?
 

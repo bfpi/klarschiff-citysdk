@@ -2,9 +2,10 @@ class Requests::AbusesController < ApplicationController
 
   # Missbrauch melden
   # params:
-  #   service_request_id  pflicht  - Vorgang-ID
-  #   author              pflicht  - Autor-Email
-  #   comment             pflicht  - Kommentar
+  #   service_request_id        pflicht  - Vorgang-ID
+  #   author                    pflicht  - Autor-Email
+  #   comment                   pflicht  - Kommentar
+  #   privacy_policy_accepted   optional - Bestätigung Datenschutz
   def create
     abuse = Abuse.new
     abuse.assign_attributes(params)

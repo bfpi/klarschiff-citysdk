@@ -2,7 +2,7 @@ class Abuse
   include DateFormatter
   include CitySDKSerialization
 
-  attr_accessor :id, :text, :autorEmail
+  attr_accessor :id, :text, :autorEmail, :privacy_policy_accepted
 
   self.serialization_attributes = [:id]
 
@@ -19,8 +19,8 @@ class Abuse
         vorgang: id,
         email: author,
         text: text,
-        resultObjectOnSubmit: true
+        resultObjectOnSubmit: true,
+        datenschutz: privacy_policy_accepted
     }
   end
-
 end

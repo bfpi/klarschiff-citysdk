@@ -3,7 +3,7 @@ class Vote
   include CitySDKSerialization
   include ValidationErrorFormatter
 
-  attr_accessor :service_request_id, :author
+  attr_accessor :service_request_id, :author, :privacy_policy_accepted
 
   self.serialization_attributes = [:id]
 
@@ -13,12 +13,12 @@ class Vote
     {
       vorgang: id,
       email: author,
-      resultObjectOnSubmit: true
+      resultObjectOnSubmit: true,
+      datenschutz: privacy_policy_accepted
     }
   end
 
   def id=(value)
     @service_request_id = value
   end
-
 end

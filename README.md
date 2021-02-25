@@ -182,6 +182,7 @@ Parameters:
 | address_string | - | String | either address_string or lat & long |
 | photo_required | - | Boolean | Photo required |
 | media | - | String | Photo (Base64-Encoded-String) |
+| privacy_policy_accepted | - | Boolean | |
 
 Sample Response:
 
@@ -283,6 +284,7 @@ Parameters:
 | api_key | X | String | API-Key |
 | author | X | String | |
 | comment | X | String | |
+| privacy_policy_accepted | - | Boolean | |
 
 Sample Response:
 
@@ -365,6 +367,7 @@ Parameters:
 | service_request_id | X | Integer | |
 | author | X | String | |
 | comment | X | String | |
+| privacy_policy_accepted | - | Boolean | |
 
 Sample Response:
 
@@ -386,7 +389,8 @@ Parameters:
 | Name | Required | Type | Notes |
 |:--|:-:|:-:|:-:|
 | service_request_id | X | Integer | |
-| author | X | String | Author-Email
+| author | X | String | Author-Email |
+| privacy_policy_accepted | - | Boolean | |
 
 Sample Response:
 

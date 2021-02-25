@@ -13,7 +13,7 @@ class Request
 
   attr_accessor :id, :version, :datum, :typ, :adresse, :statusKommentar, :kategorie, :beschreibung, :zustaendigkeitFrontend,
                 :service_notice, :auftragDatum, :adress_id, :positionWGS84, :fotoGross, :fotoNormal, :fotoThumb,
-                :zipcode, :lat, :long, :email, :trust, :unterstuetzerCount, :fotowunsch,
+                :zipcode, :lat, :long, :email, :trust, :unterstuetzerCount, :fotowunsch, :privacy_policy_accepted,
                 :job_status, :job_detail_attributes, :priority, :statusDatum, :auftragStatus, :auftragPrioritaet, :delegiertAn,
                 :beschreibungFreigabeStatus, :fotoFreigabeStatus, :property_attributes, :flurstueckseigentum
 
@@ -174,7 +174,8 @@ class Request
       beschreibung: beschreibung,
       bild: media,
       resultObjectOnSubmit: true,
-      fotowunsch: photo_required
+      fotowunsch: photo_required,
+      datenschutz: privacy_policy_accepted
     }
   end
 

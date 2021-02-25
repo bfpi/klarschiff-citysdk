@@ -16,10 +16,8 @@ class Status
   DELETED = "geloescht"
 
   def initialize(status)
-    @city_sdk = CITY_SDK.detect { |_k, v|
-      v.split(',').select { |vv| vv == status }.first }
-    @open311 = OPEN311.detect { |_k, v|
-      v.split(',').select { |vv| vv == status }.first }
+    @city_sdk = CITY_SDK.find { |_k, v| v.split(',').any? { |e| e == status } }.first
+    @open311 = OPEN311.find { |_k, v| v.include? status }.first
     @backend = status
   end
 

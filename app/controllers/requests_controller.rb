@@ -59,7 +59,7 @@ class RequestsController < ApplicationController
   #   api_key             optional - API-Key
   #   extensions          optional - Response mit erweitereten Attributsausgaben
   def show
-    @request = KSBackend.request(params[:service_request_id], params[:api_key] ? backend_params({}) : {})
+    @request = KSBackend.request(params[:service_request_id], params[:api_key] ? backend_params({ also_archived: true }) : {})
     respond_with @request, root: :service_requests, dasherize: false,
       extensions: params[:extensions].try(:to_boolean),
       property_details: has_permission?(:request_property_details),

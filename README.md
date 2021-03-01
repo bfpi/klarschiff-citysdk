@@ -391,6 +391,7 @@ Parameters:
 | service_request_id | X | Integer | |
 | author | X | String | Author-Email |
 | privacy_policy_accepted | - | Boolean | |
+| status_updates_for_customer | - | Boolean | Über Statusänderungen informieren |
 
 Sample Response:
 

@@ -3,7 +3,7 @@ class Vote
   include CitySDKSerialization
   include ValidationErrorFormatter
 
-  attr_accessor :service_request_id, :author, :privacy_policy_accepted
+  attr_accessor :service_request_id, :author, :privacy_policy_accepted, :status_updates_for_supporter
 
   self.serialization_attributes = [:id]
 
@@ -14,7 +14,8 @@ class Vote
       vorgang: id,
       email: author,
       resultObjectOnSubmit: true,
-      datenschutz: privacy_policy_accepted
+      datenschutz: privacy_policy_accepted,
+      statusaenderung_an_unterstuetzer: status_updates_for_supporter
     }
   end
 

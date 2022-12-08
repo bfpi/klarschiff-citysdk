@@ -74,7 +74,7 @@ GEM
     minitest (5.15.0)
     msgpack (1.5.4)
     nio4r (2.5.8)
-    nokogiri (1.13.9)
+    nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oj (3.13.20)
@@ -82,7 +82,7 @@ GEM
     passenger (6.0.14)
       rack
       rake (>= 0.8.1)
-    racc (1.6.0)
+    racc (1.6.1)
     rack (2.2.4)
     rack-test (2.0.2)
       rack (>= 1.3)

@@ -2,6 +2,8 @@
 ## Klarschiff-CitySDK
 Implementation of CitySDK-Smart-Participation-API for Klarschiff
 
+**This project got superseeded by the new [Klarschiff-Backoffice](https://github.com/bfpi/klarschiff-backoffice). All known API features are implemented within the new application. The maintenance and support for this repository was stopped. Please migrate to the new Klarschiff-Backoffice.**
+
 ### Supported Response Formats
 JSON, XML
 
